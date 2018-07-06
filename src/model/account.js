@@ -44,3 +44,38 @@ accountSchema.methods.verifyPasswordPromise = function verifyPasswordPromise(pas
       throw new HttpErrors(500, `ERROR CREATING TOKEN: ${JSON.stringify(err)}`);
     });
 };
+
+accountSchema.methods.createTokenPromise = function createTokenPromise() {
+  this.tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
+  return this.save()
+    .then((updatedAccount) => {
+      return jsonWebToken.sign({ tokenSeed: updatedAccount.tokenSeed }, process.env.SECRET_KEY);
+    })
+    .catch((err) => {
+      throw new HttpErrors(500, `ERROR SAVING ACCOUNT or ERROR WITH JWT: ${err}`);
+    });
+};
+
+const skipInit = process.env.NODE_ENV === 'development';
+
+const Account = mongoose.model('accounts', accountSchema, 'accounts', skipInit);
+
+Account.create = (username, email, password) => {
+  return bcrypt.hash(password, HASH_ROUNDS)
+    .then((passwordHash) => {
+      password = null; /*eslint-disable-line*/
+      const tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
+      return new Account({
+        username,
+        email,
+        passwordHash,
+        tokenSeed,
+      }).save();
+    })
+    .catch((err) => {
+      throw new HttpErrors(500, `ERROR WITH HASHING or ERROR WITH SAVING ACCOUNT: ${JSON.stringify(err)}`);
+    });
+};
+
+export default Account;
+  
