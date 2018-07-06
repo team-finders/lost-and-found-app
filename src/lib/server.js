@@ -18,15 +18,15 @@ let server = null;
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use(loggerMiddleware);
 app.use(authRouter);
+app.use(errorMiddleware);
 
 app.all('*', (request, response) => {
   console.log('Returning a 404 from the catch-all route');
   return response.sendStatus(404).send('Route Not Registered');
 });
-
-app.use(errorMiddleware);
 
 const startServer = () => {
   return mongoose.connect(process.env.MONGODB_URI)

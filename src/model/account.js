@@ -32,7 +32,7 @@ const accountSchema = mongoose.Schema({
 
 }, { timestamps: true });
 
-accountSchema.methods.verifyPasswordPromise = function verifyPasswordPromise(password) {
+accountSchema.methods.verifyPassword = function verifyPassword(password) {
   return bcrypt.compare(password, this.passwordHash)
     .then((result) => {
       if (!result) {
@@ -45,7 +45,7 @@ accountSchema.methods.verifyPasswordPromise = function verifyPasswordPromise(pas
     });
 };
 
-accountSchema.methods.createTokenPromise = function createTokenPromise() {
+accountSchema.methods.createToken = function createToken() {
   this.tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
   return this.save()
     .then((updatedAccount) => {
