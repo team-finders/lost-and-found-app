@@ -1,29 +1,49 @@
 {
-  "name": "midterm-project",
+  "name": "11-mongodb-single-resource",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-start": "nodemon index.js",
+    "test": "eslint . --fix && jest --coverage --detectOpenHandles --forceExit --runInBand",
+    "testWatch": "jest --coverage --watchAll",
+    "test-nolint": "jest --coverage --detectOpenHandles --forceExit --runInBand",
+    "test-logs": "jest --coverage --detectOpenHandles --runInBand",
+    "lint": "eslint .",
+    "dbon": "mkdir -p ./db && mongod --dbpath ./db",
+    "dboff": "killall mongod",
+    "build": "babel src -d build",
+    "start": "npm run build && node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/team-finders/lost-and-found-app.git"
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/src/__test__/lib/test.env.js"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/team-finders/lost-and-found-app.git"
-  },
-  "homepage": "https://github.com/team-finders/lost-and-found-app.git",
   "devDependencies": {
-    "aws-sdk-mock": "^4.0.0"
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "dotenv": "^6.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-react": "^7.9.1",
+    "faker": "^4.1.0",
+    "jest": "^23.1.0",
+    "nodemon": "^1.17.5",
+    "superagent": "^3.8.3",
+    "webpack": "^4.15.1",
+    "winston": "^3.0.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.270.1",
-    "babel-polyfill": "^6.26.0",
-    "fs-extra": "^6.0.1",
-    "multer": "^1.3.1"
+    "express": "^4.16.3",
+    "mongoose": "^5.1.6"
   }
 }
