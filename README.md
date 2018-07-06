@@ -17,7 +17,10 @@ Lost-and-Found.it is a back-end web-server that can be used by businesses or ins
 - Karen Lai 
 - Liz Petersen
 
-### Models
+## Entity Relationship
+![erd diagram](https://raw.githubusercontent.com/team-finders/lost-and-found-app/staging/src/temp/erd.png)
+
+### Schemas
 - Owner
 - User
 - Item
