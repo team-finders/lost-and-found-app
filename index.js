@@ -7,11 +7,11 @@ if (!process.env.NODE_ENV) {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  console.log('DEVELOPMENT SETTINGS');
+  console.log('DEVELOPMENT SETTINGS');  /*eslint-disable-line*/
   require('babel-register');
   require('./src/main');
 } else {
-  console.log('PRODUCTION SETTINGS');
+  console.log('PRODUCTION SETTINGS');  /*eslint-disable-line*/
   require('./build/main'); /*eslint-disable-line*/
 }
 
