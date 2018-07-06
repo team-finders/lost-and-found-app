@@ -10,6 +10,7 @@ Lost-and-Found.it is a back-end web-server that can be used by businesses or ins
 - bcrypt
 - AWS S3
 - Twilio
+- Travis CI
 
 ## Project Team
 - Noah Alexander 
