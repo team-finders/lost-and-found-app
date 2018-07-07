@@ -52,7 +52,7 @@ accountSchema.methods.createToken = function createToken() {
       return jsonWebToken.sign({ tokenSeed: updatedAccount.tokenSeed }, process.env.SECRET_KEY);
     })
     .catch((err) => {
-      throw new HttpErrors(500, `ERROR SAVING ACCOUNT or ERROR WITH JWT: ${err}`);
+      throw err;
     });
 };
 
@@ -73,7 +73,7 @@ Account.create = (username, email, password) => {
       }).save();
     })
     .catch((err) => {
-      throw new HttpErrors(500, `ERROR WITH HASHING or ERROR WITH SAVING ACCOUNT: ${JSON.stringify(err)}`);
+      throw err;
     });
 };
 

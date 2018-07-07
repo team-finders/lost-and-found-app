@@ -3,7 +3,7 @@
 import logger from '../logger';
 
 export default (error, request, response, next) => { /*eslint-disable-line*/
-  logger.log(logger.ERROR, `ERROR MIDDLEWARE: ${JSON.stringify(error)}`);
+  logger.log(logger.ERROR, `ERROR MIDDLEWARE: ${JSON.stringify(error.message)}`);
 
   if (error.status) {
     logger.log(logger.ERROR, `Responding with a ${error.status} code and message ${error.message}`);
@@ -11,7 +11,7 @@ export default (error, request, response, next) => { /*eslint-disable-line*/
   }
 
   const errorMessage = error.message.toLowerCase();
-  
+
   if (errorMessage.includes('objectid failed')) {
     logger.log(logger.ERROR, `Responding with a 404 status code ${errorMessage}`);
     return response.sendStatus(404);
