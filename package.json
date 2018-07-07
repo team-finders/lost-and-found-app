@@ -18,7 +18,8 @@
   "jest": {
     "setupFiles": [
       "<rootDir>/src/__test__/lib/test.env.js"
-    ]
+    ],
+    "verbose": false
   },
   "keywords": [],
   "author": "",

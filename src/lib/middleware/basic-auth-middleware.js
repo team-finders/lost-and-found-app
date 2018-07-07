@@ -4,7 +4,7 @@ import Account from '../../model/account';
 export default (request, response, next) => {
   if (!request.headers.authorization) return next(new HttpErrors(400, 'AUTH MIDDLEWARE - invalid request'));
   
-  const authHeader = request.headers.authorization.split('Basic')[1];
+  const authHeader = request.headers.authorization.split('Basic ')[1];
   if (!authHeader) return next(new HttpErrors(400, 'AUTH MIDDLEWARE - invalid request'));
 
   const authHeaderString = Buffer.from(authHeader, 'base64').toString();
@@ -14,10 +14,12 @@ export default (request, response, next) => {
   return Account.findOne({ username })
     .then((account) => {
       if (!account) return next(new HttpErrors(400, 'AUTH MIDDLEWARE - invalid request'));
+      console.log('BASIC AUTH');
       return account.verifyPassword(password);
     })
     .then((account) => {
       request.account = account;
+      console.log('BASIC AUTH 2');
       return next();
     })
     .catch(next);

@@ -3,7 +3,7 @@
 import logger from '../logger';
 
 export default (error, request, response, next) => { /*eslint-disable-line*/
-  logger.log(logger.ERROR, `ERROR MIDDLEWARE: ${JSON.stringify(error.message)}`);
+  logger.log(logger.ERROR, `ERROR MIDDLEWARE: ${JSON.stringify(error.message)}, ${error.status}`);
 
   if (error.status) {
     logger.log(logger.ERROR, `Responding with a ${error.status} code and message ${error.message}`);
