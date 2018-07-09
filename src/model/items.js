@@ -27,11 +27,11 @@ const itemsSchema = mongoose.Schema({
   // required: true,
    }, */
 
-  // Is the Item Id set up in the DB?
-  //   itemId: {
-  // type: mongoose.Schema.Types.ObjectId,
-  // required: true,
-  //   },
+  //   Is the Item Id set up in the DB?
+  itemId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
   accountId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
