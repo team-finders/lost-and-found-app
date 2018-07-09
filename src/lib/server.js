@@ -9,6 +9,7 @@ import errorMiddleware from './middleware/error-middleware';
 import loggerMiddleware from './middleware/logger-middleware';
 
 import authRouter from '../router/auth-router';
+import itemRouter from '../router/items-router';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use(loggerMiddleware);
 app.use(authRouter);
+app.use(itemRouter);
 app.use(errorMiddleware);
 
 app.all('*', (request, response) => {

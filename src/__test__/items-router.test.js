@@ -1,45 +1,48 @@
 'use strict';
 
 import superagent from 'superagent';
-import faker from 'faker';
+// import faker from 'faker';
 import { startServer, stopServer } from '../lib/server';
 import { createAccountMock, removeAccountMock } from './lib/accountMock';
-import { createItemMock, removeItemMock } from './lib/item-mock';
+// import { createItemMock, removeItemMock } from './lib/item-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
 describe('ITEM ROUTER', () => {
   beforeAll(startServer);
   afterAll(stopServer);
-  afterEach(removeItemMock);
+  afterEach(removeAccountMock);
 
-  let testItem;
-
+  // let testItem;
+  let testAccount;
   beforeEach(async () => {
     try {
-      testItem = await createItemMock();
+      // testItem = await createItemMock();
+      testAccount = await createAccountMock();
     } catch (err) {
       console.log(err);
     }
     return undefined;
-  }
-  // test('POST 200 to /api/items', async () => {
-    // const mockItem = {
-      // username: faker.internet.userName(),
-      // password: faker.lorem.words(5),
-      // email: faker.internet.email(),
-      // firstName: faker.name.firstName(),
-      // lastName: faker.name.lastName(),
-    // };
-    // try {
-      // const returnItem = await superagent.post(`${apiUrl}/items`)
-        // .send(mockItem);
-      // console.log(returnItem.body.token);
-      // expect(returnItem.status).toEqual(200);
-      // expect(returnItem.body.token).toBeTruthy();
-    // } catch (err) {
-      // expect(err).toEqual('something bad');
-    // }
-  // });
-// })
+  });
+
+  test('POST 200 to /api/items', async () => {
+    const mockItem = {
+      postType: 'Lost',
+      itemType: 'water bottle',
+    };
+
+    console.log(testAccount.originalRequest);
+    try {
+      const returnItem = await superagent.post(`${apiUrl}/items`)
+        .auth(testAccount.account.username, testAccount.originalRequest.password)
+        .set('Authorization', `Bearer ${testAccount.token}`)
+        .send(mockItem);
+      expect(returnItem.status).toEqual(200);
+      expect(returnItem.body.postType).toEqual('Lost');
+      expect(returnItem.body.itemType).toEqual('water bottle');
+      expect(returnItem.body._id).toBeTruthy();
+    } catch (err) {
+      expect(err).toEqual('something bad');
+    }
+  });
 });

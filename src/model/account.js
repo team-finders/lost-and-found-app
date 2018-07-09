@@ -42,13 +42,9 @@ const accountSchema = mongoose.Schema({
   },
 }, { timestamps: true });
 
-// How do we implement the GET and UPDATE routes for our accounts. Should only certain users be able to update the routes they post? 
-
-// Verify password
 accountSchema.methods.verifyPassword = function verifyPassword(password) {
   return bcrypt.compare(password, this.passwordHash)
     .then((result) => {
-      console.log(typeof result);
       if (!result) {
         throw new HttpErrors(401, 'ACCOUNT MODEL: Incorrect data');
       }
@@ -59,7 +55,6 @@ accountSchema.methods.verifyPassword = function verifyPassword(password) {
     });
 };
 
-// Create a user account token
 accountSchema.methods.createToken = function createToken() {
   console.log(this.tokenSeed);
   this.tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
@@ -79,6 +74,7 @@ const Account = mongoose.model('accounts', accountSchema, 'accounts', skipInit);
 
 // Create a new account
 Account.create = (username, password, email, firstName, lastName, phoneNumber) => {
+  console.log(password);
   return bcrypt.hash(password, HASH_ROUNDS)
     .then((passwordHash) => {
       password = null; /*eslint-disable-line*/

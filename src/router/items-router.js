@@ -23,7 +23,6 @@ itemsRouter.post('/api/items', bearerAuthMiddleware, (request, response, next) =
   return undefined;
 });
 
-// GET request allows us to retrieve items, either one or all
 itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: 400 for invalid request'));
     
