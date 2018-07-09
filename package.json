@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "bcrypt": "^2.0.1",
+    "casl": "^1.1.0",
     "cors": "^2.8.4",
     "crypto": "^1.0.1",
     "express": "^4.16.3",

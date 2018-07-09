@@ -1,7 +1,7 @@
 'use strict';
 
 import superagent from 'superagent';
-import faker from 'faker';
+// import faker from 'faker';
 import { startServer, stopServer } from '../lib/server';
 import { createAccountMock, removeAccountMock } from './lib/accountMock';
 // import { createItemMock, removeItemMock } from './lib/item-mock';
@@ -30,6 +30,8 @@ describe('ITEM ROUTER', () => {
       postType: 'Lost',
       itemType: 'water bottle',
     };
+
+    console.log(testAccount.originalRequest);
     try {
       const returnItem = await superagent.post(`${apiUrl}/items`)
         .auth(testAccount.account.username, testAccount.originalRequest.password)

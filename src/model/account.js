@@ -10,32 +10,41 @@ const HASH_ROUNDS = 1;
 const TOKEN_SEED_LENGTH = 50;
 
 const accountSchema = mongoose.Schema({
-  passwordHash: {
+  tokenSeed: {
     type: String,
     required: true,
+    unique: true,
   },
   username: {
     type: String,
     required: true,
     unique: true,
   },
+  passwordHash: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
     unique: true,
   },
-  tokenSeed: {
+  firstName: {
     type: String,
     required: true,
-    unique: true,
   },
-
+  lastName: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: Number,
+  },
 }, { timestamps: true });
 
 accountSchema.methods.verifyPassword = function verifyPassword(password) {
   return bcrypt.compare(password, this.passwordHash)
     .then((result) => {
-      console.log(typeof result);
       if (!result) {
         throw new HttpErrors(401, 'ACCOUNT MODEL: Incorrect data');
       }
@@ -63,15 +72,20 @@ const skipInit = process.env.NODE_ENV === 'development';
 
 const Account = mongoose.model('accounts', accountSchema, 'accounts', skipInit);
 
-Account.create = (username, email, password) => {
+// Create a new account
+Account.create = (username, password, email, firstName, lastName, phoneNumber) => {
+  console.log(password);
   return bcrypt.hash(password, HASH_ROUNDS)
     .then((passwordHash) => {
       password = null; /*eslint-disable-line*/
       const tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
       return new Account({
         username,
-        email,
         passwordHash,
+        email,
+        firstName,
+        lastName,
+        phoneNumber,
         tokenSeed,
       }).save();
     })

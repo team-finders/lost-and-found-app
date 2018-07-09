@@ -18,7 +18,7 @@ describe('AUTH router', () => {
     try {
       testAccount = await createAccountMock();
     } catch (err) {
-      console.log(err);
+      console.log(err); /* eslint-disable-line */
     }
     return undefined;
   });
