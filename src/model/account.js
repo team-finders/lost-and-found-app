@@ -32,9 +32,10 @@ const accountSchema = mongoose.Schema({
 
 }, { timestamps: true });
 
-accountSchema.methods.verifyPasswordPromise = function verifyPasswordPromise(password) {
+accountSchema.methods.verifyPassword = function verifyPassword(password) {
   return bcrypt.compare(password, this.passwordHash)
     .then((result) => {
+      console.log(typeof result);
       if (!result) {
         throw new HttpErrors(401, 'ACCOUNT MODEL: Incorrect data');
       }
@@ -45,14 +46,16 @@ accountSchema.methods.verifyPasswordPromise = function verifyPasswordPromise(pas
     });
 };
 
-accountSchema.methods.createTokenPromise = function createTokenPromise() {
+accountSchema.methods.createToken = function createToken() {
+  console.log(this.tokenSeed);
   this.tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
   return this.save()
     .then((updatedAccount) => {
+      console.log(updatedAccount);
       return jsonWebToken.sign({ tokenSeed: updatedAccount.tokenSeed }, process.env.SECRET_KEY);
     })
     .catch((err) => {
-      throw new HttpErrors(500, `ERROR SAVING ACCOUNT or ERROR WITH JWT: ${err}`);
+      throw err;
     });
 };
 
@@ -73,7 +76,7 @@ Account.create = (username, email, password) => {
       }).save();
     })
     .catch((err) => {
-      throw new HttpErrors(500, `ERROR WITH HASHING or ERROR WITH SAVING ACCOUNT: ${JSON.stringify(err)}`);
+      throw err;
     });
 };
 
