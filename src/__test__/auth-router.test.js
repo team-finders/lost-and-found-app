@@ -34,7 +34,6 @@ describe('AUTH router', () => {
     try {
       const returnAccount = await superagent.post(`${apiUrl}/signup`)
         .send(mockAccount);
-      console.log(returnAccount.body.token);  /* eslint-disable-line */
       expect(returnAccount.status).toEqual(200);
       expect(returnAccount.body.token).toBeTruthy();
     } catch (err) {
