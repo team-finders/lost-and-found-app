@@ -12,7 +12,6 @@ authRouter.post('/api/signup', (request, response, next) => {
       return Account.create(request.body.username, request.body.email, request.body.password, request.body.firstName, request.body.lastName, request.body.phoneNumber);
     })
     .then((account) => {
-      console.log(account);
       delete request.body.password;
       logger.log(logger.INFO, 'AUTH ROUTER to /api/signup: creating token');
       return account.createToken();

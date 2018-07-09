@@ -14,12 +14,10 @@ export default (request, response, next) => {
   return Account.findOne({ username })
     .then((account) => {
       if (!account) return next(new HttpErrors(400, 'AUTH MIDDLEWARE - invalid request'));
-      console.log('BASIC AUTH');
       return account.verifyPassword(password);
     })
     .then((account) => {
       request.account = account;
-      console.log('BASIC AUTH 2');
       return next();
     })
     .catch(next);
