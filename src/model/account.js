@@ -24,6 +24,11 @@ const accountSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -31,11 +36,6 @@ const accountSchema = mongoose.Schema({
   lastName: {
     type: String,
     required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
   },
   phoneNumber: {
     type: Number,
@@ -78,15 +78,18 @@ const skipInit = process.env.NODE_ENV === 'development';
 const Account = mongoose.model('accounts', accountSchema, 'accounts', skipInit);
 
 // Create a new account
-Account.create = (username, email, password) => {
+Account.create = (username, password, email, firstName, lastName, phoneNumber) => {
   return bcrypt.hash(password, HASH_ROUNDS)
     .then((passwordHash) => {
       password = null; /*eslint-disable-line*/
       const tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
       return new Account({
         username,
-        email,
         passwordHash,
+        email,
+        firstName,
+        lastName,
+        phoneNumber,
         tokenSeed,
       }).save();
     })
