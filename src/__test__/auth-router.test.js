@@ -27,8 +27,11 @@ describe('AUTH router', () => {
     test('POST 200 to /api/signup', async () => {
       const mockAccount = {
         username: faker.internet.userName(),
+        password: faker.lorem.words(5),
         email: faker.internet.email(),
-        password: 'hahahaha',
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        phoneNumber: faker.random.number(),
       };
       try {
         const returnAccount = await superagent.post(`${apiUrl}/signup`)
@@ -42,8 +45,11 @@ describe('AUTH router', () => {
   
     test('POST 400 for no username', async () => {
       const mockAccount = {
+        password: faker.lorem.words(5),
         email: faker.internet.email(),
-        password: 'hahahaha',
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        phoneNumber: faker.random.number(),
       };
       try {
         const returnAccount = await superagent.post(`${apiUrl}/signup`)
@@ -57,7 +63,10 @@ describe('AUTH router', () => {
     test('POST 400 for no email', async () => {
       const mockAccount = {
         username: faker.internet.userName(),
-        password: 'hahahaha',
+        password: faker.lorem.words(5),
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        phoneNumber: faker.random.number(),
       };
       try {
         const returnAccount = await superagent.post(`${apiUrl}/signup`)
@@ -71,8 +80,11 @@ describe('AUTH router', () => {
     test('POST 409 for conflicting username', async () => {
       const mockAccount = {
         username: testAccount.account.username,
+        password: faker.lorem.words(5),
         email: faker.internet.email(),
-        password: 'hahahaha',
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        phoneNumber: faker.random.number(),
       };
       try {
         const returnAccount = await superagent.post(`${apiUrl}/signup`)
@@ -85,9 +97,12 @@ describe('AUTH router', () => {
   
     test('POST 409 for conflicting email', async () => {
       const mockAccount = {
-        username: faker.internet.userName(),
+        username: testAccount.account.username,
+        password: faker.lorem.words(5),
         email: testAccount.account.email,
-        password: 'hahahaha',
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        phoneNumber: faker.random.number(),
       };
       try {
         const returnAccount = await superagent.post(`${apiUrl}/signup`)
@@ -100,15 +115,18 @@ describe('AUTH router', () => {
   
     test('POST 500 for no password', async () => {
       const mockAccount = {
-        username: faker.internet.userName(),
-        email: faker.internet.email(),
+        username: testAccount.account.username,
+        email: testAccount.account.email,
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        phoneNumber: faker.random.number(),
       };
       try {
         const returnAccount = await superagent.post(`${apiUrl}/signup`)
           .send(mockAccount);
         throw returnAccount;
       } catch (err) {
-        expect(err.status).toEqual(500);
+        expect(err.status).toEqual(400);
       }
     });
   });

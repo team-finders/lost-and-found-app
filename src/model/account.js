@@ -56,11 +56,9 @@ accountSchema.methods.verifyPassword = function verifyPassword(password) {
 };
 
 accountSchema.methods.createToken = function createToken() {
-  console.log(this.tokenSeed);
   this.tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
   return this.save()
     .then((updatedAccount) => {
-      console.log(updatedAccount);
       return jsonWebToken.sign({ tokenSeed: updatedAccount.tokenSeed }, process.env.SECRET_KEY);
     })
     .catch((err) => {
@@ -74,7 +72,7 @@ const Account = mongoose.model('accounts', accountSchema, 'accounts', skipInit);
 
 // Create a new account
 Account.create = (username, password, email, firstName, lastName, phoneNumber) => {
-  console.log(password);
+  if (!username || !password || !email || !firstName || !lastName) throw new HttpErrors(400, 'missing form info');
   return bcrypt.hash(password, HASH_ROUNDS)
     .then((passwordHash) => {
       password = null; /*eslint-disable-line*/
