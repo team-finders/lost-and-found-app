@@ -7,6 +7,8 @@ const createAccountMock = () => {
     username: faker.internet.userName(),
     email: faker.internet.email(),
     password: faker.lorem.words(5),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
   };
 
   return Account.create(originalRequest.username, originalRequest.email, originalRequest.password)

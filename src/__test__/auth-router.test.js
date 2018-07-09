@@ -18,16 +18,18 @@ describe('AUTH router', () => {
     try {
       testAccount = await createAccountMock();
     } catch (err) {
-      console.log(err);
+      console.log(err); /* eslint-disable-line */
     }
     return undefined;
   });
 
-  test('POST 200 to /api/signup', async () => {
+  test.only('POST 200 to /api/signup', async () => {
     const mockAccount = {
       username: faker.internet.userName(),
+      password: faker.lorem.words(5),
       email: faker.internet.email(),
-      password: 'hahahaha',
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
     };
     try {
       const returnAccount = await superagent.post(`${apiUrl}/signup`)
