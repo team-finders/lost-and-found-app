@@ -3,6 +3,7 @@ import HttpErrors from 'http-errors';
 import Account from '../model/account';
 import basicAuthMiddleware from '../lib/middleware/basic-auth-middleware';
 import logger from '../lib/logger';
+import bearerAuthMiddleware from '../lib/middleware/bearer-auth-middleware'; /*eslint-disable-line*/
 
 const authRouter = new Router();
 
