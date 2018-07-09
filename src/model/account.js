@@ -10,28 +10,41 @@ const HASH_ROUNDS = 1;
 const TOKEN_SEED_LENGTH = 50;
 
 const accountSchema = mongoose.Schema({
-  passwordHash: {
+  tokenSeed: {
     type: String,
     required: true,
+    unique: true,
   },
   username: {
     type: String,
     required: true,
     unique: true,
   },
+  passwordHash: {
+    type: String,
+    required: true,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
     unique: true,
   },
-  tokenSeed: {
-    type: String,
-    required: true,
-    unique: true,
+  phoneNumber: {
+    type: Number,
   },
-
 }, { timestamps: true });
 
+// How do we implement the GET and UPDATE routes for our accounts. Should only certain users be able to update the routes they post? 
+
+// Verify password
 accountSchema.methods.verifyPassword = function verifyPassword(password) {
   return bcrypt.compare(password, this.passwordHash)
     .then((result) => {
@@ -46,6 +59,7 @@ accountSchema.methods.verifyPassword = function verifyPassword(password) {
     });
 };
 
+// Create a user account token
 accountSchema.methods.createToken = function createToken() {
   console.log(this.tokenSeed);
   this.tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
@@ -63,6 +77,7 @@ const skipInit = process.env.NODE_ENV === 'development';
 
 const Account = mongoose.model('accounts', accountSchema, 'accounts', skipInit);
 
+// Create a new account
 Account.create = (username, email, password) => {
   return bcrypt.hash(password, HASH_ROUNDS)
     .then((passwordHash) => {
