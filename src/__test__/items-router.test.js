@@ -75,7 +75,7 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe.only('Admin POST requests', () => {
+  describe('Admin POST requests', () => {
     let testAdmin;
 
     beforeEach(async () => {
