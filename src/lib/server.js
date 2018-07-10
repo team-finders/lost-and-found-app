@@ -46,7 +46,7 @@ const stopServer = () => {
   return mongoose.disconnect()
     .then(() => {
       server.close(() => {
-        logger.log(logger.info, 'Server is off');
+        logger.log(logger.INFO, 'Server is off');
       });
     })
     .catch((err) => {
