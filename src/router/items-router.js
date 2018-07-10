@@ -24,7 +24,7 @@ itemsRouter.post('/api/items', bearerAuthMiddleware, permit('account', 'admin'),
   return undefined;
 });
 
-itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, (request, response, next) => {
+itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, permit('account', 'admin'), (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: 400 for invalid request'));
 
   if (!request.params.id) {
@@ -39,6 +39,26 @@ itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, (request, response, nex
     .then((item) => {
       if (!item) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: item not found'));
       return response.json(item);
+    })
+    .catch(next);
+  return undefined;
+});
+
+itemsRouter.delete('/api/items/:id?', bearerAuthMiddleware, permit('account', 'admin'), (request, response, next) => {
+  if (!request.account) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: 400 for invalid request'));
+
+  if (!request.params.id) {
+    return Item.find({})
+      .then((items) => {
+        return response.json(items);
+      })
+      .catch(next);
+  }
+
+  Item.findOneAndDelete({ _id: request.params.id })
+    .then(() => {
+      logger.log(logger.INFO, `${request.params.id} deleted`);
+      return response.status(200).send('item deleted');
     })
     .catch(next);
   return undefined;

@@ -162,4 +162,29 @@ describe('ITEM ROUTER', () => {
       }
     });
   });
+
+  describe('Account DELETE requests', () => {
+    test('DELETE 200 for successful deletion', async () => {
+      try {
+        const returnItem = await superagent.delete(`${apiUrl}/items/${testAccount.item._id}`)
+          .auth(testAccount.account.username, testAccount.originalRequest.password)
+          .set('Authorization', `Bearer ${testAccount.token}`);
+        expect(returnItem.status).toEqual(200);
+      } catch (err) { 
+        expect(err).toEqual('foo');
+      }
+    });
+
+    test('GET: 404 for item NOT FOUND', async () => {
+      try {
+        const returnItem = await superagent.delete(`${apiUrl}/items/badId`)
+          .auth(testAccount.account.username, testAccount.originalRequest.password)
+          .set('Authorization', `Bearer ${testAccount.token}`);
+
+        throw returnItem;
+      } catch (err) { 
+        expect(err.status).toEqual(404);
+      }
+    });
+  });
 });
