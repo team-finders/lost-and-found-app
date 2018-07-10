@@ -43,4 +43,19 @@ itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, (request, response, nex
   return undefined;
 });
 
+/*
+Item.findOne({ 'postType': 'Lost' }, { _id: request.params.id }, callback(err, result) {
+  if (err) return handleError(err);
+})
+    return result;
+});
+
+Item.findOne({ 'postType': 'Found' }, { _id: request.params.id }, callback(err, result) {
+  if (err) return handleError(err);
+})
+    return result;
+});
+
+*/
+
 export default itemsRouter;

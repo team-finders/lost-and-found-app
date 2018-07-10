@@ -12,14 +12,12 @@ describe('ITEM ROUTER', () => {
   afterAll(stopServer);
   afterEach(removeAllResources);
 
-  // let testItem;
   let testAccount;
   beforeEach(async () => {
     try {
-      // testItem = await createItemMock();
       testAccount = await createItemMock();
     } catch (err) {
-      console.log(err);
+      console.log(err);  /* eslint-disable-line */
     }
     return undefined;
   });
@@ -30,7 +28,6 @@ describe('ITEM ROUTER', () => {
         postType: 'Lost',
         itemType: 'water bottle',
       };
-      console.log(testAccount);
       try {
         const returnItem = await superagent.post(`${apiUrl}/items`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -85,7 +82,7 @@ describe('ITEM ROUTER', () => {
           .set('Authorization', `Bearer ${testAccount.token}`);
         expect(returnItem.status).toEqual(200);
       } catch (err) { 
-        console.log(err);
+        console.log(err);  /* eslint-disable-line */
       }
     });
 

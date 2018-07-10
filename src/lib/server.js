@@ -26,7 +26,7 @@ app.use(itemRouter);
 app.use(errorMiddleware);
 
 app.all('*', (request, response) => {
-  console.log('Returning a 404 from the catch-all route');
+  console.log('Returning a 404 from the catch-all route');  /* eslint-disable-line */
   return response.sendStatus(404).send('Route Not Registered');
 });
 
@@ -34,7 +34,7 @@ const startServer = () => {
   return mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
       server = app.listen(PORT, () => {
-        console.log('Server listening on Port: ', PORT);
+        console.log('Server listening on Port: ', PORT);  /* eslint-disable-line */
       });
     })
     .catch((err) => {
