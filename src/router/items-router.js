@@ -25,8 +25,8 @@ itemsRouter.post('/api/items', bearerAuthMiddleware, (request, response, next) =
 
 itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: 400 for invalid request'));
-    
-  if (!request.params._id) {
+
+  if (!request.params.id) {
     return Item.find({})
       .then((items) => {
         return response.json(items);
