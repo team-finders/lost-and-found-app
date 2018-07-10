@@ -60,4 +60,19 @@ describe('ITEM ROUTER', () => {
       expect(err.status).toEqual(400);
     }
   });
+
+  test('POST: 401 for unauthorized user', async () => {
+    const mockItem = {
+      postType: 'Lost',
+      itemType: 'water bottle',
+    };
+    try {
+      const returnItem = await superagent.post(`${apiUrl}/items`)
+        .auth(testAccount.account.username, 'IncorrectPassword')
+        .send(mockItem);
+      throw returnItem;
+    } catch (err) {
+      expect(err.status).toEqual(401);
+    }
+  });
 });
