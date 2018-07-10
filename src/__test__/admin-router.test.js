@@ -134,7 +134,6 @@ describe('AUTH router', () => {
   describe('GET', () => {
     test('GET 200 for api login', async () => {
       try {
-        console.log(testAccount);
         const returnAccount = await superagent.get(`${apiUrl}/admin/login`)
           .auth(testAccount.account.username, testAccount.originalRequest.password);
         expect(returnAccount.status).toEqual(200);

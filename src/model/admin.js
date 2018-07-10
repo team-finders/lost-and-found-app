@@ -45,7 +45,6 @@ const adminSchema = mongoose.Schema({
 adminSchema.methods.verifyPassword = function verifyPassword(password) {
   return bcrypt.compare(password, this.passwordHash)
     .then((result) => {
-      console.log('result', result);
       if (!result) {
         throw new HttpErrors(401, 'ACCOUNT MODEL: Incorrect data');
       }

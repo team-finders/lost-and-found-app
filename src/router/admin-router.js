@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import HttpErrors from 'http-errors';
 import Admin from '../model/admin';
-import adminAuthMiddleware from '../lib/middleware/admin-auth-middleware';
+import basicAuthMiddleware from '../lib/middleware/basic-auth-middleware';
 import logger from '../lib/logger';
 
 const adminRouter = new Router();
@@ -23,9 +23,8 @@ adminRouter.post('/api/admin/create', (request, response, next) => {
     .catch(next);
 });
 
-adminRouter.get('/api/admin/login', adminAuthMiddleware, (request, response, next) => {
+adminRouter.get('/api/admin/login', basicAuthMiddleware, (request, response, next) => {
   if (!request.admin) return next(new HttpErrors(400, 'AUTH ROUTER to /api/login: invalid request'));
-
   return request.admin.createToken()
     .then((token) => {
       logger.log(logger.INFO, `AUTH ROUTER to /api/login - responding with 200 status code and token ${token}`);
