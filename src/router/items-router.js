@@ -3,11 +3,13 @@ import HttpErrors from 'http-errors';
 import Item from '../model/items';
 import bearerAuthMiddleware from '../lib/middleware/bearer-auth-middleware';
 import logger from '../lib/logger';
+import permit from '../lib/middleware/permissions-middleware';
 
 const itemsRouter = new Router();
 
-itemsRouter.post('/api/items', bearerAuthMiddleware, (request, response, next) => {
+itemsRouter.post('/api/items', bearerAuthMiddleware, permit('account'), (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'POST REQUEST to ITEM ROUTER: Invalid Request'));
+
   Item.init()
     .then(() => {
       return new Item({

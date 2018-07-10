@@ -4,6 +4,7 @@ import HttpErrors from 'http-errors';
 import jsonWebToken from 'jsonwebtoken';
 import { promisify } from 'util';
 import Account from '../../model/account';
+import Admin from '../../model/admin';
 
 const jwtVerify = promisify(jsonWebToken.verify);
 
@@ -17,12 +18,27 @@ export default (req, res, next) => {
       return Promise.reject(new HttpErrors(400, `BEARER AUTH - jsonWebToken error ${JSON.stringify(err)}`));
     })
     .then((decryptedToken) => {
-      return Account.findOne({ tokenSeed: decryptedToken.tokenSeed });
-    })
-    .then((account) => {
-      if (!account) return next(new HttpErrors(404, 'BEARER AUTH - No account found'));
-      req.account = account;
-      return next();
+      if (Account.findOne({ tokenSeed: decryptedToken.tokenSeed })) {
+        return Account.findOne({ tokenSeed: decryptedToken.tokenSeed })
+          .then((account) => {
+            req.permissions = 'account';
+            req.account = account;
+            return next();
+          })
+          .catch(next);
+      }
+
+      if (Admin.findOne({ tokenSeed: decryptedToken.tokenSeed })) {
+        return Admin.findOne({ tokenSeed: decryptedToken.tokenSeed })
+          .then((account) => {
+            req.permissions = 'admin';
+            req.account = account;
+            return next();
+          })
+          .catch(next);
+      }
+
+      return next(new HttpErrors(404, 'BEARER AUTH - No account found'));
     })
     .catch(next);
 };
