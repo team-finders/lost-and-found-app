@@ -31,7 +31,6 @@ describe('ITEM ROUTER', () => {
       itemType: 'water bottle',
     };
 
-    console.log(testAccount.originalRequest);
     try {
       const returnItem = await superagent.post(`${apiUrl}/items`)
         .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -43,6 +42,37 @@ describe('ITEM ROUTER', () => {
       expect(returnItem.body._id).toBeTruthy();
     } catch (err) {
       expect(err).toEqual('something bad');
+    }
+  });
+
+  test('POST: 400 for no postType', async () => {
+    const mockItem = {
+      itemType: 'water bottle',
+    };
+    
+    try {
+      const returnItem = await superagent.post(`${apiUrl}/items`)
+        .auth(testAccount.account.username, testAccount.originalRequest.password)
+        .set('Authorization', `Bearer ${testAccount.token}`)
+        .send(mockItem);
+      throw returnItem;
+    } catch (err) {
+      expect(err.status).toEqual(400);
+    }
+  });
+
+  test('POST: 401 for unauthorized user', async () => {
+    const mockItem = {
+      postType: 'Lost',
+      itemType: 'water bottle',
+    };
+    try {
+      const returnItem = await superagent.post(`${apiUrl}/items`)
+        .auth(testAccount.account.username, 'IncorrectPassword')
+        .send(mockItem);
+      throw returnItem;
+    } catch (err) {
+      expect(err.status).toEqual(401);
     }
   });
 });
