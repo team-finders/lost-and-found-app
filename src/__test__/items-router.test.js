@@ -187,4 +187,41 @@ describe('ITEM ROUTER', () => {
       }
     });
   });
+
+  describe('Account PUT requests', () => {
+    test('PUT 200 for successful retrieval', async () => {
+      try {
+        const newItem = {
+          color: 'black',
+          itemType: 'clothing',
+        };
+        console.log(testAccount.item);
+        const returnItem = await superagent.put(`${apiUrl}/items/${testAccount.item._id}`)
+          .auth(testAccount.account.username, testAccount.originalRequest.password)
+          .set('Authorization', `Bearer ${testAccount.token}`)
+          .send(newItem);
+        expect(returnItem.status).toEqual(200);
+        expect(returnItem.body.color).toEqual('black');
+      } catch (err) { 
+        console.log(err);
+      }
+    });
+
+    test('GET: 404 for item NOT FOUND', async () => {
+      try {
+        const newItem = {
+          color: 'black',
+        };
+
+        const returnItem = await superagent.put(`${apiUrl}/items/badId`)
+          .auth(testAccount.account.username, testAccount.originalRequest.password)
+          .set('Authorization', `Bearer ${testAccount.token}`)
+          .send(newItem);
+
+        throw returnItem;
+      } catch (err) { 
+        expect(err.status).toEqual(404);
+      }
+    });
+  });
 });

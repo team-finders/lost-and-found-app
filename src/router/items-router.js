@@ -64,4 +64,35 @@ itemsRouter.delete('/api/items/:id?', bearerAuthMiddleware, permit('account', 'a
   return undefined;
 });
 
+itemsRouter.put('/api/items/:id?', bearerAuthMiddleware, permit('account', 'admin'), (request, response, next) => {
+  if (!request.account) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: 400 for invalid request'));
+
+  if (!request.params.id) {
+    return Item.find({})
+      .then((items) => {
+        return response.json(items);
+      })
+      .catch(next);
+  }
+
+  if (Object.keys(request.body).length === 0) {
+    return next(new HttpErrors(400, 'Missing body'));
+  }
+
+  const options = {
+    new: true,
+    runValidators: true,
+  };
+
+  return Item.init()
+    .then(() => {
+      return Item.findByIdAndUpdate(request.params.id, request.body, options);
+    })
+    .then((newItem) => {
+      logger.log(logger.INFO, `item updated: ${JSON.stringify(newItem)}`);
+      return response.json(newItem);
+    })
+    .catch(next);
+});
+
 export default itemsRouter;
