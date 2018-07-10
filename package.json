@@ -1,7 +1,7 @@
 {
   "name": "11-mongodb-single-resource",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Project Description Lost-and-FoundIt is a back-end web-server that can be used by businesses or institutions to help match lost items with their owners. Finders of lost items can post the item via the web-server, which logs the item into a database. Those who have lost items can post a \"lost item\" request, and be notified through a text should there be a match in the database.",
   "main": "index.js",
   "scripts": {
     "dev-start": "nodemon index.js",
@@ -25,6 +25,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "aws-sdk-mock": "^4.0.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-preset-env": "^1.7.0",
@@ -53,5 +54,13 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.1",
     "mongoose-auto-increment": "^5.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-finders/lost-and-found-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/team-finders/lost-and-found-app/issues"
+  },
+  "homepage": "https://github.com/team-finders/lost-and-found-app#readme"
 }

@@ -34,4 +34,8 @@ const removeAllResources = () => {
   ]);
 };
 
+
+// describe a post, .attach an img with path, send the body, 
+//  expect 200
+
 export { createItemMock, removeAllResources };
