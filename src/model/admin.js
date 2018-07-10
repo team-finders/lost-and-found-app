@@ -45,7 +45,6 @@ const adminSchema = mongoose.Schema({
 adminSchema.methods.verifyPassword = function verifyPassword(password) {
   return bcrypt.compare(password, this.passwordHash)
     .then((result) => {
-      console.log('result', result);
       if (!result) {
         throw new HttpErrors(401, 'ACCOUNT MODEL: Incorrect data');
       }
@@ -58,8 +57,10 @@ adminSchema.methods.verifyPassword = function verifyPassword(password) {
 
 adminSchema.methods.createToken = function createToken() {
   this.tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
+  console.log(this);
   return this.save()
     .then((updatedAccount) => {
+      console.log('account updated', updatedAccount);
       return jsonWebToken.sign({ tokenSeed: updatedAccount.tokenSeed }, process.env.SECRET_KEY);
     })
     .catch((err) => {

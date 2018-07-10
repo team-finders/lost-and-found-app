@@ -27,10 +27,10 @@ app.use(adminRouter);
 app.use(itemRouter);
 app.use(errorMiddleware);
 
-app.all('*', (request, response) => {
-  console.log('Returning a 404 from the catch-all route');
-  return response.sendStatus(404).send('Route Not Registered');
-});
+// app.all('*', (request, response) => {
+//   console.log('Returning a 404 from the catch-all route', response.err);
+//   return response.sendStatus(404).send('Route Not Registered');
+// });
 
 const startServer = () => {
   return mongoose.connect(process.env.MONGODB_URI)
