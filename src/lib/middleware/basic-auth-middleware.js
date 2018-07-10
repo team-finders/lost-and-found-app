@@ -14,7 +14,6 @@ export default (request, response, next) => {
   if (!username || !password) return next(new HttpErrors(400, 'AUTH MIDDLEWARE - invalid request'));
   return Account.findOne({ username })
     .then((account) => {
-      console.log(account);
       if (!account) {
         return Admin.findOne({ username })
           .then((admin) => {

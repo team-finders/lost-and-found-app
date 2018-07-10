@@ -22,17 +22,18 @@ export default (req, res, next) => {
     })
     .then((decryptedToken) => {
       tokenCache = decryptedToken.tokenSeed;
-      return Account.collection.findOne({ tokenSeed: tokenCache });
+      return Account.findOne({ tokenSeed: tokenCache });
     })
     .then((account) => {
       if (!account) {
         return Admin.findOne({ tokenSeed: tokenCache })
           .then((admin) => {
+            console.log(admin);
             req.permissions = 'admin';
             req.account = admin;
             return next();
           })
-          .catch(next(new HttpErrors(404, 'BEARER AUTH - No account found')));
+          .catch(next);
       }
       req.permissions = 'account';
       req.account = account;

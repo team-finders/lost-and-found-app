@@ -7,9 +7,8 @@ import permit from '../lib/middleware/permissions-middleware';
 
 const itemsRouter = new Router();
 
-itemsRouter.post('/api/items', bearerAuthMiddleware, permit('account'), (request, response, next) => {
+itemsRouter.post('/api/items', bearerAuthMiddleware, permit('account', 'admin'), (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'POST REQUEST to ITEM ROUTER: Invalid Request'));
-
   Item.init()
     .then(() => {
       return new Item({
