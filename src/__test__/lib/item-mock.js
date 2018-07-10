@@ -1,35 +1,37 @@
-// import faker from 'faker';
-// // import createAccountMockPromise from './accountMock';
+import faker from 'faker'; /*eslint-disable-line*/
+import { createAccountMock, removeAccountMock } from './accountMock';
+import Item from '../../model/items';
 
-// const createItemMockPromise = () => {
-//   const mockData = {};
+const createItemMock = () => {
+  const mockData = {};
 
-//   return createItemMockPromise()
-//     .then((mockItemData) => {
-//       mockData.account = mockItemData.account;
-//       mockData.token = mockItemData.token;
+  return createAccountMock()
+    .then((mockAccount) => {
+      mockData.originalRequest = mockAccount.originalRequest;
+      mockData.account = mockAccount.account;
+      mockData.token = mockAccount.token;
       
-//       const mockItem = {
-//         postType: faker.lorem.word(),
-//         itemType: faker.lorem.words(2),
-//         accountId: mockItemData.account._id,
-//       };
-//       return new Item(mockItem).save();
-//     })
-//     .then((item) => {
-//       mockData.item = item;
-//       return mockData;
-//     })
-//     .catch((err) => {
-//       throw err;
-//     });
-// };
+      const mockItem = {
+        postType: 'Lost',
+        itemType: 'water bottle',
+        accountId: mockData.account._id,
+      };
+      return new Item(mockItem).save();
+    })
+    .then((item) => {
+      mockData.item = item;
+      return mockData;
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
 
-// const removeAllResources = () => {
-//   return Promise.all([
-//     Item.remove({}),
-//     removeAccountMockPromise(),
-//   ]);
-// };
+const removeAllResources = () => {
+  return Promise.all([
+    Item.remove({}),
+    removeAccountMock(),
+  ]);
+};
 
-// export { createItemMockPromise, removeAllResources };
+export { createItemMock, removeAllResources };
