@@ -28,7 +28,6 @@ export default (req, res, next) => {
       if (!account) {
         return Admin.findOne({ tokenSeed: tokenCache })
           .then((admin) => {
-            console.log(admin);
             req.permissions = 'admin';
             req.account = admin;
             return next();

@@ -15,10 +15,11 @@ describe('ITEM ROUTER', () => {
 
   let testAccount;
   beforeEach(async () => {
+    jest.setTimeout(20000);
     try {
       testAccount = await createItemMock();
     } catch (err) {
-      console.log(err);  /* eslint-disable-line */
+      throw err; 
     }
     return undefined;
   });
@@ -39,7 +40,7 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
-        expect(returnItem.body.image.url).toBeTruthy();
+        expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }
@@ -84,7 +85,7 @@ describe('ITEM ROUTER', () => {
       try {
         testAdmin = await createAdminMock();
       } catch (err) {
-        console.log(err);
+        throw err;
       }
       return undefined;
     });
@@ -104,7 +105,7 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
-        expect(returnItem.body.image.url).toBeTruthy();
+        expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }
@@ -150,7 +151,7 @@ describe('ITEM ROUTER', () => {
           .set('Authorization', `Bearer ${testAccount.token}`);
         expect(returnItem.status).toEqual(200);
       } catch (err) { 
-        console.log(err);  /* eslint-disable-line */
+        throw err; 
       }
     });
 
@@ -199,7 +200,6 @@ describe('ITEM ROUTER', () => {
           color: 'black',
           itemType: 'clothing',
         };
-        console.log(testAccount.item);
         const returnItem = await superagent.put(`${apiUrl}/items/${testAccount.item._id}`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
           .set('Authorization', `Bearer ${testAccount.token}`)
@@ -207,7 +207,7 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.color).toEqual('black');
       } catch (err) { 
-        console.log(err);
+        console.log(err); /* eslint-disable-line */
       }
     });
 

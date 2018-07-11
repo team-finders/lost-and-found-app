@@ -19,19 +19,16 @@ itemsRouter.post('/api/items', bearerAuthMiddleware, permit('account', 'admin'),
   
   const [file] = request.files;
   logger.log(logger.INFO, `ITEMS ROUTER POST TO AWS: valid file ready to upload: ${JSON.stringify(file, null, 2)}`);
- 
-  const key = `${file.fileName}.${file.originalname}`;
-
+  const key = `${file.filename}.${file.originalname}`;
+  
   return s3Upload(file.path, key)
     .then((url) => {
       logger.log(logger.INFO, `IMAGE ROUTER POST: received a valid url from Amazon S3: ${url}`);
       return new Item({
         ...request.body,
         accountId: request.account._id,
-        image: {
-          url,
-          fileName: key,
-        },
+        imageUrl: url,
+        imageFileName: key,
       }).save();
     })
     .then((item) => {

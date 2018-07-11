@@ -3,7 +3,7 @@ process.env.PORT = 5000;
 process.env.MONGODB_URI = 'mongodb://localhost/testing-foundit';
 process.env.SECRET_KEY = 'randomstdringasdfasf309484950495';
 
-const isAwsMock = true;
+const isAwsMock = false;
 
 if (isAwsMock) {
   process.env.AWS_BUCKET = 'fake';
