@@ -36,7 +36,7 @@ const startServer = () => {
   return mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
       server = app.listen(PORT, () => {
-        console.log('Server listening on Port: ', PORT);
+        console.log('Server listening on Port: ', PORT);  /* eslint-disable-line */
       });
     })
     .catch((err) => {

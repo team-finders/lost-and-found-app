@@ -18,7 +18,7 @@ describe('ITEM ROUTER', () => {
     try {
       testAccount = await createItemMock();
     } catch (err) {
-      console.log(err);
+      console.log(err);  /* eslint-disable-line */
     }
     return undefined;
   });
@@ -33,11 +33,13 @@ describe('ITEM ROUTER', () => {
         const returnItem = await superagent.post(`${apiUrl}/items`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
           .set('Authorization', `Bearer ${testAccount.token}`)
-          .send(mockItem);
+          .field(mockItem)
+          .attach('image', `${__dirname}/assets/orange-water-bottle.jpg`);
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
+        expect(returnItem.body.image.url).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }
@@ -96,11 +98,13 @@ describe('ITEM ROUTER', () => {
         const returnItem = await superagent.post(`${apiUrl}/items`)
           .auth(testAdmin.account.username, testAdmin.originalRequest.password)
           .set('Authorization', `Bearer ${testAdmin.token}`)
-          .send(mockItem);
+          .field(mockItem)
+          .attach('image', `${__dirname}/assets/orange-water-bottle.jpg`);
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
+        expect(returnItem.body.image.url).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }
@@ -146,7 +150,7 @@ describe('ITEM ROUTER', () => {
           .set('Authorization', `Bearer ${testAccount.token}`);
         expect(returnItem.status).toEqual(200);
       } catch (err) { 
-        console.log(err);
+        console.log(err);  /* eslint-disable-line */
       }
     });
 

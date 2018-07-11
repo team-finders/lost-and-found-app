@@ -25,7 +25,7 @@ authRouter.post('/api/signup', (request, response, next) => {
 
 authRouter.get('/api/login', basicAuthMiddleware, (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'AUTH ROUTER to /api/login: invalid request'));
-  console.log(request.account);
+  console.log(request.account);  /* eslint-disable-line */
   return request.account.createToken()
     .then((token) => {
       logger.log(logger.INFO, `AUTH ROUTER to /api/login - responding with 200 status code and token ${token}`);
