@@ -1,4 +1,4 @@
-import multer from 'multer';
+import multer from 'multer'; //eslint-disable-line
 import { Router } from 'express';
 import HttpErrors from 'http-errors';
 import Item from '../model/items';
@@ -123,12 +123,3 @@ itemsRouter.put('/api/items/:id?', bearerAuthMiddleware, permit('account', 'admi
 });
 
 export default itemsRouter;
-
-
-/*
-  needs:
-  aws upload
-  capture req.img from .attach('img', path/to/img/)
-  attach returned url from aws.upload to req.body
-  save item with all props attached 
-  */
