@@ -1,20 +1,20 @@
 import { Router } from 'express';
 import HttpErrors from 'http-errors';
-import Account from '../model/account';
+import Admin from '../model/admin';
 import basicAuthMiddleware from '../lib/middleware/basic-auth-middleware';
 import logger from '../lib/logger';
 
-const authRouter = new Router();
+const adminRouter = new Router();
 
-authRouter.post('/api/signup', (request, response, next) => {
-  Account.init()
+adminRouter.post('/api/admin/create', (request, response, next) => {
+  Admin.init()
     .then(() => {
-      return Account.create(request.body.username, request.body.email, request.body.password, request.body.firstName, request.body.lastName, request.body.phoneNumber);
+      return Admin.create(request.body.username, request.body.email, request.body.password, request.body.firstName, request.body.lastName, request.body.phoneNumber);
     })
-    .then((account) => {
+    .then((admin) => {
       delete request.body.password;
       logger.log(logger.INFO, 'AUTH ROUTER to /api/signup: creating token');
-      return account.createToken();
+      return admin.createToken();
     })
     .then((token) => {
       logger.log(logger.INFO, `AUTH ROUTER to /api/signup: sending a 200 code and a token ${token}`);
@@ -23,10 +23,9 @@ authRouter.post('/api/signup', (request, response, next) => {
     .catch(next);
 });
 
-authRouter.get('/api/login', basicAuthMiddleware, (request, response, next) => {
-  if (!request.account) return next(new HttpErrors(400, 'AUTH ROUTER to /api/login: invalid request'));
-  console.log(request.account);  /* eslint-disable-line */
-  return request.account.createToken()
+adminRouter.get('/api/admin/login', basicAuthMiddleware, (request, response, next) => {
+  if (!request.admin) return next(new HttpErrors(400, 'AUTH ROUTER to /api/login: invalid request'));
+  return request.admin.createToken()
     .then((token) => {
       logger.log(logger.INFO, `AUTH ROUTER to /api/login - responding with 200 status code and token ${token}`);
       return response.json({ token });  
@@ -34,4 +33,4 @@ authRouter.get('/api/login', basicAuthMiddleware, (request, response, next) => {
     .catch(next);
 });
 
-export default authRouter;
+export default adminRouter;

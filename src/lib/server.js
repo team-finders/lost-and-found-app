@@ -9,6 +9,7 @@ import errorMiddleware from './middleware/error-middleware';
 import loggerMiddleware from './middleware/logger-middleware';
 
 import authRouter from '../router/auth-router';
+import adminRouter from '../router/admin-router';
 import itemRouter from '../router/items-router';
 
 const app = express();
@@ -22,19 +23,20 @@ app.use(express.json());
 
 app.use(loggerMiddleware);
 app.use(authRouter);
+app.use(adminRouter);
 app.use(itemRouter);
 app.use(errorMiddleware);
 
-app.all('*', (request, response) => {
-  console.log('Returning a 404 from the catch-all route');
-  return response.sendStatus(404).send('Route Not Registered');
-});
+// app.all('*', (request, response) => {
+//   console.log('Returning a 404 from the catch-all route', response.err);
+//   return response.sendStatus(404).send('Route Not Registered');
+// });
 
 const startServer = () => {
   return mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
       server = app.listen(PORT, () => {
-        console.log('Server listening on Port: ', PORT);
+        console.log('Server listening on Port: ', PORT);  /* eslint-disable-line */
       });
     })
     .catch((err) => {
