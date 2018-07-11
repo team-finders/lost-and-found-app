@@ -85,7 +85,7 @@ describe('ITEM ROUTER', () => {
       try {
         testAdmin = await createAdminMock();
       } catch (err) {
-        console.log(err);
+        console.log(err); /* eslint-disable-line */
       }
       return undefined;
     });
