@@ -15,6 +15,7 @@ describe('ITEM ROUTER', () => {
 
   let testAccount;
   beforeEach(async () => {
+    jest.setTimeout(20000);
     try {
       testAccount = await createItemMock();
     } catch (err) {
@@ -39,7 +40,7 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
-        expect(returnItem.body.image.url).toBeTruthy();
+        expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }
@@ -104,7 +105,7 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
-        expect(returnItem.body.image.url).toBeTruthy();
+        expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }

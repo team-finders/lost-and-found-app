@@ -19,7 +19,7 @@
     "setupFiles": [
       "<rootDir>/src/__test__/lib/test.env.js"
     ],
-    "verbose": false
+    "verbose": true 
   },
   "keywords": [],
   "author": "",
