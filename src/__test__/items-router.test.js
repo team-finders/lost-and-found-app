@@ -8,7 +8,7 @@ import { createAdminMock } from './lib/admin-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
-describe('ITEM ROUTER', () => {
+describe('ITEM ROUTER REQUESTS', () => {
   beforeAll(startServer);
   afterAll(stopServer);
   afterEach(removeAllResources);
@@ -24,8 +24,8 @@ describe('ITEM ROUTER', () => {
     return undefined;
   });
 
-  describe('Account POST requests', () => {
-    test('POST 200 to /api/items', async () => {
+  describe('POST request to ITEMS', () => {
+    test('ITEM ROUTER POST: Send 200 for successful post to /api/items', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -46,7 +46,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('POST: 400 for no postType', async () => {
+    test('ITEM ROUTER POST: 400 for no postType', async () => {
       const mockItem = {
         itemType: 'water bottle',
       };
@@ -62,7 +62,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('POST: 401 for unauthorized user', async () => {
+    test('ITEM ROUTER POST: 401 for unauthorized user', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -78,7 +78,7 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe('Admin POST requests', () => {
+  describe('ADMIN POST requests to ITEMS', () => {
     let testAdmin;
 
     beforeEach(async () => {
@@ -90,7 +90,7 @@ describe('ITEM ROUTER', () => {
       return undefined;
     });
 
-    test('POST 200 to /api/items', async () => {
+    test('ADMIN ROUTER POST to ITEMS: 200 for successful post to /api/items', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -111,7 +111,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('POST: 400 for no postType', async () => {
+    test('ADMIN ROUTER POST to ITEMS: 400 for no postType', async () => {
       const mockItem = {
         itemType: 'water bottle',
       };
@@ -127,7 +127,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('POST: 401 for unauthorized user', async () => {
+    test('ADMIN ROUTER POST to ITEMS: 401 for unauthorized user', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -143,8 +143,8 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe('Account GET requests', () => {
-    test('GET: 200 for successful retrieval', async () => {
+  describe('ACCOUNT ROUTER GET requests', () => {
+    test('ACCOUNT ROUTER GET: 200 for successful retrieval of item', async () => {
       try {
         const returnItem = await superagent.get(`${apiUrl}/items/${testAccount.item._id}`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -155,7 +155,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('GET: 404 for item NOT FOUND', async () => {
+    test('ACCOUNT ROUTER GET: 404 for item NOT FOUND', async () => {
       try {
         const returnItem = await superagent.get(`${apiUrl}/items/badId`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -168,8 +168,8 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe('Account DELETE requests', () => {
-    test('DELETE 200 for successful deletion', async () => {
+  describe('ACCOUNT ROUTER DELETE requests', () => {
+    test('ACCOUNT ROUTER DELETE: Send 200 for successful deletion of item', async () => {
       try {
         const returnItem = await superagent.delete(`${apiUrl}/items/${testAccount.item._id}`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -180,7 +180,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('GET: 404 for item NOT FOUND', async () => {
+    test('ACCOUNT ROUTER DELETE: 404 for item NOT FOUND', async () => {
       try {
         const returnItem = await superagent.delete(`${apiUrl}/items/badId`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -193,8 +193,8 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe('Account PUT requests', () => {
-    test('PUT 200 for successful retrieval', async () => {
+  describe('ITEMS ROUTER PUT requests', () => {
+    test('ITEMS ROUTER PUT: 200 for successful updating of item and return new item', async () => {
       try {
         const newItem = {
           color: 'black',
@@ -211,7 +211,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('GET: 404 for item NOT FOUND', async () => {
+    test('ITEMS ROUTER PUT: 404 for item NOT FOUND', async () => {
       try {
         const newItem = {
           color: 'black',
