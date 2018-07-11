@@ -98,11 +98,13 @@ describe('ITEM ROUTER', () => {
         const returnItem = await superagent.post(`${apiUrl}/items`)
           .auth(testAdmin.account.username, testAdmin.originalRequest.password)
           .set('Authorization', `Bearer ${testAdmin.token}`)
-          .send(mockItem);
+          .field(mockItem)
+          .attach('image', `${__dirname}/assets/orange-water-bottle.jpg`);
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
+        expect(returnItem.body.image.url).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }
