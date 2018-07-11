@@ -3,7 +3,7 @@ import { Router } from 'express';
 import HttpErrors from 'http-errors';
 import Item from '../model/items';
 import bearerAuthMiddleware from '../lib/middleware/bearer-auth-middleware';
-import { s3Upload, s3Remove } from '../lib/s3';
+import { s3Upload, s3Remove } from '../lib/s3'; /* eslint-disable-line */
 import logger from '../lib/logger';
 import permit from '../lib/middleware/permissions-middleware';
 
@@ -41,7 +41,7 @@ itemsRouter.post('/api/items', bearerAuthMiddleware, permit('account'), multerUp
     .catch(next);
 });
 
-itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, (request, response, next) => {
+itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, permit('account', 'admin'), (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: 400 for invalid request'));
 
   if (!request.params.id) {
@@ -61,33 +61,63 @@ itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, (request, response, nex
   return undefined;
 });
 
-/*
-Item.findOne({ 'postType': 'Lost' }, { _id: request.params.id }, callback(err, result) {
-  if (err) return handleError(err);
-})
-    return result;
-});
+// return Item.findById(request.params.id)
+// .then((image) => {
+// if (!image) return next(new HttpErrors(404, 'IMAGE ROUTE DELETE: no image found'));
+// const key = image.fileName;
+// return s3Remove(key);
+// })
+// .then((result) => {
+// return response.json(result);
+// logger.log(logger.INFO, 'IMAGE ROUTER DELETE: successfully deleted image');
 
-Item.findOne({ 'postType': 'Found' }, { _id: request.params.id }, callback(err, result) {
-  if (err) return handleError(err);
-})
-    return result;
-});
+itemsRouter.delete('/api/items/:id?', bearerAuthMiddleware, permit('account', 'admin'), (request, response, next) => {
+  if (!request.account) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: 400 for invalid request'));
 
-*/
+  if (!request.params.id) {
+    return Item.find({})
+      .then((items) => {
+        return response.json(items);
+      })
+      .catch(next);
+  }
 
-itemsRouter.delete('/api/items/:id?', bearerAuthMiddleware, permit('account'), (request, response, next) => {
-  if (!request.account) return next(new HttpErrors(401, 'ITEMS ROUTER DELETE: invalid request'));
-  if (!request.params.key) return next(new HttpErrors(400, 'ITEMS ROUTER DELETE: no id provided'));  
-  return Item.findById(request.params.id)
-    .then((image) => {
-      if (!image) return next(new HttpErrors(404, 'IMAGE ROUTE DELETE: no image found'));
-      const key = image.fileName;
-      return s3Remove(key);
+  Item.findOneAndDelete({ _id: request.params.id })
+    .then(() => {
+      logger.log(logger.INFO, `${request.params.id} deleted`);
+      return response.status(200).send('item deleted');
     })
-    .then((result) => {
-      return response.json(result);
-      // logger.log(logger.INFO, 'IMAGE ROUTER DELETE: successfully deleted image');
+    .catch(next);
+  return undefined;
+});
+
+itemsRouter.put('/api/items/:id?', bearerAuthMiddleware, permit('account', 'admin'), (request, response, next) => {
+  if (!request.account) return next(new HttpErrors(400, 'GET REQUEST to ITEM ROUTER: 400 for invalid request'));
+
+  if (!request.params.id) {
+    return Item.find({})
+      .then((items) => {
+        return response.json(items);
+      })
+      .catch(next);
+  }
+
+  if (Object.keys(request.body).length === 0) {
+    return next(new HttpErrors(400, 'Missing body'));
+  }
+
+  const options = {
+    new: true,
+    runValidators: true,
+  };
+
+  return Item.init()
+    .then(() => {
+      return Item.findByIdAndUpdate(request.params.id, request.body, options);
+    })
+    .then((newItem) => {
+      logger.log(logger.INFO, `item updated: ${JSON.stringify(newItem)}`);
+      return response.json(newItem);
     })
     .catch(next);
 });

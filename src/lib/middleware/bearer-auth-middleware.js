@@ -13,32 +13,31 @@ export default (req, res, next) => {
 
   const token = req.headers.authorization.split('Bearer ')[1];
   if (!token) return next(new HttpErrors(401, 'Bad token'));
+
+  let tokenCache;
+
   return jwtVerify(token, process.env.SECRET_KEY)
     .catch((err) => {
       return Promise.reject(new HttpErrors(400, `BEARER AUTH - jsonWebToken error ${JSON.stringify(err)}`));
     })
     .then((decryptedToken) => {
-      if (Account.findOne({ tokenSeed: decryptedToken.tokenSeed })) {
-        return Account.findOne({ tokenSeed: decryptedToken.tokenSeed })
-          .then((account) => {
-            req.permissions = 'account';
-            req.account = account;
-            return next();
-          })
-          .catch(next);
-      }
-
-      if (Admin.findOne({ tokenSeed: decryptedToken.tokenSeed })) {
-        return Admin.findOne({ tokenSeed: decryptedToken.tokenSeed })
-          .then((account) => {
+      tokenCache = decryptedToken.tokenSeed;
+      return Account.findOne({ tokenSeed: tokenCache });
+    })
+    .then((account) => {
+      if (!account) {
+        return Admin.findOne({ tokenSeed: tokenCache })
+          .then((admin) => {
+            console.log(admin);
             req.permissions = 'admin';
-            req.account = account;
+            req.account = admin;
             return next();
           })
           .catch(next);
       }
-
-      return next(new HttpErrors(404, 'BEARER AUTH - No account found'));
+      req.permissions = 'account';
+      req.account = account;
+      return next();
     })
     .catch(next);
 };
