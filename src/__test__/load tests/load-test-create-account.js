@@ -13,9 +13,9 @@ loadTestUser.create = (accountContext, events, done) => {
 
   // properties from item schema
   accountContext.vars.bio = faker.lorem.words(10) + uuid();
-  accountContext.vars.postType = faker.name.postType() + uuid();
-  accountContext.vars.itemType = faker.name.itemType() + uuid();
-  accountContext.vars.color = faker.name.color() + uuid();
+  accountContext.vars.postType = `lost ${uuid()}`;
+  accountContext.vars.itemType = `watch ${uuid()}`;
+  accountContext.vars.color = `purple ${uuid()}`;
   return done();
 };
 

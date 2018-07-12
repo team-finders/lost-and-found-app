@@ -10,14 +10,16 @@
   },
   "scenarios": [
     {
-      "flow": [
+      "flow": [ 
         {
           "post": {
             "url": "/api/signup",
             "json": {
-              "username": "judy",
-              "email": "judy@foo.com",
-              "password": "password"
+              "username": "Noah",
+              "email": "noahmvf@gmail.com",
+              "password": "yayayayaya",
+              "firstName": "Jim Bob",
+              "lastName": "Cooter"
             }
           }
         }
