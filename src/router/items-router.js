@@ -16,7 +16,6 @@ itemsRouter.post('/api/items', bearerAuthMiddleware, permit('account', 'admin'),
   if (!request.files || request.files.length !== 1) {
     return next(new HttpErrors(400, 'IMAGE ROUTER POST REQUEST: invalid request'));
   } 
-  
   const [file] = request.files;
   logger.log(logger.INFO, `ITEMS ROUTER POST TO AWS: valid file ready to upload: ${JSON.stringify(file, null, 2)}`);
   const key = `${file.filename}.${file.originalname}`;

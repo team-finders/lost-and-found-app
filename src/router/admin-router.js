@@ -13,7 +13,7 @@ adminRouter.post('/api/admin/create', (request, response, next) => {
     })
     .then((admin) => {
       delete request.body.password;
-      logger.log(logger.INFO, 'AUTH ROUTER to /api/signup: creating token');
+      logger.log(logger.INFO, 'ADMIN ROUTER to /api/admin/create creating token');
       return admin.createToken();
     })
     .then((token) => {

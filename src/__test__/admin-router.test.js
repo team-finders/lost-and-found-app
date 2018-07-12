@@ -47,8 +47,6 @@ describe('ADMIN ROUTER', () => {
       const mockAccount = {
         password: faker.lorem.words(5),
         email: faker.internet.email(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
         phoneNumber: faker.random.number(),
       };
       try {
@@ -64,8 +62,6 @@ describe('ADMIN ROUTER', () => {
       const mockAccount = {
         username: faker.internet.userName(),
         password: faker.lorem.words(5),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
         phoneNumber: faker.random.number(),
       };
       try {
