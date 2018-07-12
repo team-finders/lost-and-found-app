@@ -11,7 +11,7 @@ import loggerMiddleware from './middleware/logger-middleware';
 import authRouter from '../router/auth-router';
 import adminRouter from '../router/admin-router';
 import itemRouter from '../router/items-router';
-import twilioRouter from '../router/twilio-router';
+// import twilioRouter from '../router/twilio-router';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,7 +26,7 @@ app.use(loggerMiddleware);
 app.use(authRouter);
 app.use(adminRouter);
 app.use(itemRouter);
-app.use(twilioRouter);
+// app.use(twilioRouter);
 app.use(errorMiddleware);
 
 // app.all('*', (request, response) => {

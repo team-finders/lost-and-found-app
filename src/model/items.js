@@ -1,7 +1,7 @@
 'use strict';
 
 import mongoose from 'mongoose';
-import itemPreHook from '../lib/twilio';
+// import itemPreHook from '../lib/twilio';
 
 const itemsSchema = mongoose.Schema({
   postType: {
@@ -36,4 +36,4 @@ const itemsSchema = mongoose.Schema({
 const skipInit = process.env.NODE_ENV === 'development';
 export default mongoose.model('items', itemsSchema, 'items', skipInit);
 
-itemsSchema.pre('save', itemPreHook);
+// itemsSchema.pre('save', itemPreHook);

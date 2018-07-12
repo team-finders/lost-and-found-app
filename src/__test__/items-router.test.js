@@ -15,11 +15,10 @@ describe('ITEM ROUTER REQUESTS', () => {
 
   let testAccount;
   beforeEach(async () => {
-    jest.setTimeout(20000);
     try {
       testAccount = await createItemMock();
     } catch (err) {
-      throw err; 
+      console.log(err);  /* eslint-disable-line */
     }
     return undefined;
   });
@@ -42,7 +41,6 @@ describe('ITEM ROUTER REQUESTS', () => {
         expect(returnItem.body._id).toBeTruthy();
         expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
-        console.log(err, 'fgjkadglkjfglk;fhl;gkafglkadglk');
         expect(err).toEqual('something bad');
       }
     });
@@ -86,7 +84,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       try {
         testAdmin = await createAdminMock();
       } catch (err) {
-        throw err;
+        console.log(err);  /* eslint-disable-line */
       }
       return undefined;
     });

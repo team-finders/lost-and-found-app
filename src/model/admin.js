@@ -29,14 +29,6 @@ const adminSchema = mongoose.Schema({
     required: true,
     unique: true,
   },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
   phoneNumber: {
     type: Number,
   },
@@ -70,8 +62,8 @@ const skipInit = process.env.NODE_ENV === 'development';
 
 const Admin = mongoose.model('admin', adminSchema, 'admin', skipInit);
 
-Admin.create = (username, password, email, firstName, lastName, phoneNumber) => {
-  if (!username || !password || !email || !firstName || !lastName) throw new HttpErrors(400, 'missing form info');
+Admin.create = (username, password, email, phoneNumber) => {
+  if (!username || !password || !email || phoneNumber) throw new HttpErrors(400, 'missing form info');
   return bcrypt.hash(password, HASH_ROUNDS)
     .then((passwordHash) => {
       password = null; /*eslint-disable-line*/
@@ -80,8 +72,6 @@ Admin.create = (username, password, email, firstName, lastName, phoneNumber) => 
         username,
         passwordHash,
         email,
-        firstName,
-        lastName,
         phoneNumber,
         tokenSeed,
       }).save();
