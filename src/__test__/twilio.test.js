@@ -40,7 +40,7 @@ describe('TWILIO ITEM TEST', () => {
       };
       try {
         const returnItem = await superagent.post(`${apiUrl}/items`)
-          .auth(testAccount2.account.username, testAccount2.originalRequest.password)
+          // .auth(testAccount2.account.username, testAccount2.originalRequest.password)
           .set('Authorization', `Bearer ${testAccount2.token}`)
           .field(mockItem)
           .attach('image', `${__dirname}/assets/orange-water-bottle.jpg`);

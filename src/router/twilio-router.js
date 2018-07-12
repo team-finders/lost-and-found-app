@@ -8,7 +8,7 @@ const twilioRouter = new Router();
 
 twilioRouter.post('/api/sms', (req, res) => {
   const twiml = new MessagingResponse();
-  const body = req.body.body.toLowerCase();
+  const body = req.body.Body.toLowerCase();
 
   if (body === 'yes') {
     twiml.message('Great! Please look for it at the campus Lost and Found');

@@ -9,7 +9,7 @@ function sendMessage(phoneNum, imageUrl) {
   return client.messages //eslint-disable-line
     .create({
       body: 'Is this your lost item??',
-      from: '+12062037088',
+      from: process.env.TWILIO_NUM,
       mediaUrl: `${imageUrl}`,
       to: `+${phoneNum}`,
     })
