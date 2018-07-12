@@ -1,0 +1,27 @@
+{
+  "config": {
+    "target": "http://localhost:3000",
+    "phases": [
+      {
+        "duration": 5,
+        "arrivalRate": 100
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "flow": [
+        {
+          "post": {
+            "url": "/api/signup",
+            "json": {
+              "username": "judy",
+              "email": "judy@foo.com",
+              "password": "password"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
