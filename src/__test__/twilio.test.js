@@ -8,7 +8,7 @@ import { createAccountMock } from './lib/accountMock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
-describe('ITEM ROUTER', () => {
+describe('TWILIO ITEM TEST', () => {
   beforeAll(startServer);
   afterAll(stopServer);
   afterEach(removeAllResources);
@@ -23,7 +23,7 @@ describe('ITEM ROUTER', () => {
     return undefined;
   });
 
-  describe('Account POST requests', () => {
+  describe('Twilio POST requests', () => {
     let testAccount2;
     beforeEach(async () => {
       try {
@@ -40,7 +40,7 @@ describe('ITEM ROUTER', () => {
       };
       try {
         const returnItem = await superagent.post(`${apiUrl}/items`)
-          .auth(testAccount2.account.username, testAccount2.originalRequest.password)
+          // .auth(testAccount2.account.username, testAccount2.originalRequest.password)
           .set('Authorization', `Bearer ${testAccount2.token}`)
           .field(mockItem)
           .attach('image', `${__dirname}/assets/orange-water-bottle.jpg`);
@@ -48,7 +48,7 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.body.postType).toEqual('Found');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
-        expect(returnItem.body.image.url).toBeTruthy();
+        expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }
