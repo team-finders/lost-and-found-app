@@ -13,6 +13,3 @@ if (isAwsMock) {
 } else {
   require('dotenv').config();
 }
-
-process.env.accountSid = 'AC421bc4347e3cd65960a0eb902f1c330b';
-process.env.authToken = 'b0789aceb3463f875284fe9d33073cf6';

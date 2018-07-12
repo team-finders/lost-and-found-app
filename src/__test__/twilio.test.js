@@ -13,11 +13,10 @@ describe('ITEM ROUTER', () => {
   afterAll(stopServer);
   afterEach(removeAllResources);
 
-  let testAccount;
+  let testAccount; //eslint-disable-line
   beforeEach(async () => {
     try {
       testAccount = await createMatchMock();
-      console.log('EXISTNG', testAccount);
     } catch (err) {
       console.log(err);  /* eslint-disable-line */
     }
@@ -45,7 +44,6 @@ describe('ITEM ROUTER', () => {
           .set('Authorization', `Bearer ${testAccount2.token}`)
           .field(mockItem)
           .attach('image', `${__dirname}/assets/orange-water-bottle.jpg`);
-        console.log(returnItem.body);
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.postType).toEqual('Found');
         expect(returnItem.body.itemType).toEqual('water bottle');

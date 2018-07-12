@@ -10,7 +10,7 @@ const createAccountMock = () => {
     email: faker.internet.email(),
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
-    phoneNumber: '2065187920',
+    phoneNumber: '12065187920',
   };
 
   return Account.create(originalRequest.username, originalRequest.password, originalRequest.email, originalRequest.firstName, originalRequest.lastName, originalRequest.phoneNumber)
