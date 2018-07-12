@@ -3,10 +3,10 @@ import Account from '../model/account';
 
 require('dotenv').config();
 
-const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+// const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 function sendMessage(phoneNum) {
-  return client.messages
+  return client.messages //eslint-disable-line
     .create({
       body: 'Is this your lost item??',
       from: '+12062037088',
