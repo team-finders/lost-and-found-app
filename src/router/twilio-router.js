@@ -6,7 +6,7 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse; //eslint-di
 
 const twilioRouter = new Router();
 
-twilioRouter.post('/api/sms', (req, res, next) => {
+twilioRouter.post('/api/sms', (req, res) => {
   const twiml = new MessagingResponse();
   const body = req.body.body.toLowerCase();
 
