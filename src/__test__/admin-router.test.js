@@ -7,7 +7,7 @@ import { createAdminMock, removeAdminMock } from './lib/admin-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
-describe('AUTH router', () => {
+describe('ADMIN ROUTER', () => {
   beforeAll(startServer);
   afterAll(stopServer);
   afterEach(removeAdminMock);
@@ -23,8 +23,8 @@ describe('AUTH router', () => {
     return undefined;
   });
 
-  describe('POST', () => {
-    test('POST 200 to /api/admin/create', async () => {
+  describe('ADMIN ROUTER POST', () => {
+    test('ADMIN ROUTER POST: 200 to /api/admin/create', async () => {
       const mockAccount = {
         username: faker.internet.userName(),
         password: faker.lorem.words(5),
@@ -43,7 +43,7 @@ describe('AUTH router', () => {
       }
     });
   
-    test('POST 400 for no username', async () => {
+    test('ADMIN ROUTER POST: 400 for no username', async () => {
       const mockAccount = {
         password: faker.lorem.words(5),
         email: faker.internet.email(),
@@ -60,7 +60,7 @@ describe('AUTH router', () => {
       }
     });
   
-    test('POST 400 for no email', async () => {
+    test('ADMIN ROUTER POST: 400 for no email', async () => {
       const mockAccount = {
         username: faker.internet.userName(),
         password: faker.lorem.words(5),
@@ -77,7 +77,7 @@ describe('AUTH router', () => {
       }
     });
   
-    test('POST 409 for conflicting username', async () => {
+    test('ADMIN ROUTER POST: 409 for conflicting username', async () => {
       const mockAccount = {
         username: testAccount.account.username,
         password: faker.lorem.words(5),
@@ -95,7 +95,7 @@ describe('AUTH router', () => {
       }
     });
   
-    test('POST 409 for conflicting email', async () => {
+    test('ADMIN ROUTER POST: 409 for conflicting email', async () => {
       const mockAccount = {
         username: testAccount.account.username,
         password: faker.lorem.words(5),
@@ -113,7 +113,7 @@ describe('AUTH router', () => {
       }
     });
   
-    test('POST 500 for no password', async () => {
+    test('ADMIN ROUTER POST: 500 for no password', async () => {
       const mockAccount = {
         username: testAccount.account.username,
         email: testAccount.account.email,
@@ -131,8 +131,8 @@ describe('AUTH router', () => {
     });
   });
   
-  describe('GET', () => {
-    test('GET 200 for api login', async () => {
+  describe('ADMIN ROUTER GET REQUESTS', () => {
+    test('ADMIN ROUTER GET: 200 for successful login to /api/admin/login', async () => {
       try {
         const returnAccount = await superagent.get(`${apiUrl}/admin/login`)
           .auth(testAccount.account.username, testAccount.originalRequest.password);
@@ -143,7 +143,7 @@ describe('AUTH router', () => {
       }
     });
   
-    test('GET 400 for no username', async () => {
+    test('ADMIN ROUTER GET: 400 for no username', async () => {
       try {
         const returnAccount = await superagent.get(`${apiUrl}/admin/login`)/*eslint-disable-line*/
           .auth(testAccount.originalRequest.password); 
@@ -152,7 +152,7 @@ describe('AUTH router', () => {
       }
     });
   
-    test('GET 400 for no password', async () => {
+    test('ADMIN ROUTER GET: 400 for no password', async () => {
       try {
         const returnAccount = await superagent.get(`${apiUrl}/admin/login`)/*eslint-disable-line*/
           .auth(testAccount.originalRequest.username); 
@@ -161,7 +161,7 @@ describe('AUTH router', () => {
       }
     });
   
-  //   test('GET 401 for wrong password', async () => {
+  //   test('ADMIN ROUTER GET: 401 for wrong password', async () => {
   //     try {
   //       const returnAccount = await superagent.get(`${apiUrl}/admin/login`)
   //         .auth(testAccount.originalRequest.username, 'randomPassword');
