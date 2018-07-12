@@ -13,7 +13,23 @@ const itemsRouter = new Router();
 
 itemsRouter.post('/api/items', bearerAuthMiddleware, permit('account', 'admin'), multerUpload.any(), (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'POST REQUEST to ITEM ROUTER: Invalid Request'));
-  if (!request.files || request.files.length !== 1) {
+  if (!request.files) {
+    Item.init()
+      .then(() => {
+        return new Item({
+          ...request.body,
+          accountId: request.account._id,
+        }).save();
+      })
+      .then((item) => {
+        logger.log(logger.INFO, 'POST item created');
+        return response.json(item);
+      })
+      .catch(next);
+    return undefined;
+  } 
+
+  if (request.files.length !== 1) {
     return next(new HttpErrors(400, 'IMAGE ROUTER POST REQUEST: invalid request'));
   } 
   const [file] = request.files;

@@ -43,6 +43,7 @@ const createMatchMock = () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
+        location: 'Code Fellows',
         accountId: mockData.account._id,
       };
       return new Item(mockItem).save();
