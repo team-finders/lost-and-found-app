@@ -29,6 +29,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
+        location: 'Code Fellows',
       };
       try {
         const returnItem = await superagent.post(`${apiUrl}/items`)
@@ -39,10 +40,10 @@ describe('ITEM ROUTER REQUESTS', () => {
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
+        expect(returnItem.body.location).toEqual('Code Fellows');
         expect(returnItem.body._id).toBeTruthy();
         expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
-        console.log(err, 'fgjkadglkjfglk;fhl;gkafglkadglk');
         expect(err).toEqual('something bad');
       }
     });
@@ -50,6 +51,7 @@ describe('ITEM ROUTER REQUESTS', () => {
     test('ITEM ROUTER POST: 400 for no postType', async () => {
       const mockItem = {
         itemType: 'water bottle',
+        location: 'Code Fellows',
       };
     
       try {
@@ -67,6 +69,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
+        location: 'Code Fellows',
       };
       try {
         const returnItem = await superagent.post(`${apiUrl}/items`)
@@ -95,6 +98,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
+        location: 'Code Fellows',
       };
       try {
         const returnItem = await superagent.post(`${apiUrl}/items`)
@@ -105,6 +109,7 @@ describe('ITEM ROUTER REQUESTS', () => {
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
+        expect(returnItem.body.location).toEqual('Code Fellows');
         expect(returnItem.body._id).toBeTruthy();
         expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
@@ -115,6 +120,7 @@ describe('ITEM ROUTER REQUESTS', () => {
     test('ADMIN ROUTER POST to ITEMS: 400 for no postType', async () => {
       const mockItem = {
         itemType: 'water bottle',
+        location: 'Code Fellows',
       };
     
       try {
@@ -132,6 +138,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
+        location: 'Code Fellows',
       };
       try {
         const returnItem = await superagent.post(`${apiUrl}/items`)
