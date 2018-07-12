@@ -8,23 +8,24 @@ import { createAdminMock } from './lib/admin-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
-describe('ITEM ROUTER', () => {
+describe('ITEM ROUTER REQUESTS', () => {
   beforeAll(startServer);
   afterAll(stopServer);
   afterEach(removeAllResources);
 
   let testAccount;
   beforeEach(async () => {
+    jest.setTimeout(20000);
     try {
       testAccount = await createItemMock();
     } catch (err) {
-      console.log(err);  /* eslint-disable-line */
+      throw err; 
     }
     return undefined;
   });
 
-  describe('Account POST requests', () => {
-    test('POST 200 to /api/items', async () => {
+  describe('POST request to ITEMS', () => {
+    test('ITEM ROUTER POST: Send 200 for successful post to /api/items', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -39,13 +40,14 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
-        expect(returnItem.body.image.url).toBeTruthy();
+        expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
+        console.log(err, 'fgjkadglkjfglk;fhl;gkafglkadglk');
         expect(err).toEqual('something bad');
       }
     });
 
-    test('POST: 400 for no postType', async () => {
+    test('ITEM ROUTER POST: 400 for no postType', async () => {
       const mockItem = {
         itemType: 'water bottle',
       };
@@ -61,7 +63,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('POST: 401 for unauthorized user', async () => {
+    test('ITEM ROUTER POST: 401 for unauthorized user', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -77,19 +79,19 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe('Admin POST requests', () => {
+  describe('ADMIN POST requests to ITEMS', () => {
     let testAdmin;
 
     beforeEach(async () => {
       try {
         testAdmin = await createAdminMock();
       } catch (err) {
-        console.log(err);
+        throw err;
       }
       return undefined;
     });
 
-    test('POST 200 to /api/items', async () => {
+    test('ADMIN ROUTER POST to ITEMS: 200 for successful post to /api/items', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -104,13 +106,13 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.body.postType).toEqual('Lost');
         expect(returnItem.body.itemType).toEqual('water bottle');
         expect(returnItem.body._id).toBeTruthy();
-        expect(returnItem.body.image.url).toBeTruthy();
+        expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
         expect(err).toEqual('something bad');
       }
     });
 
-    test('POST: 400 for no postType', async () => {
+    test('ADMIN ROUTER POST to ITEMS: 400 for no postType', async () => {
       const mockItem = {
         itemType: 'water bottle',
       };
@@ -126,7 +128,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('POST: 401 for unauthorized user', async () => {
+    test('ADMIN ROUTER POST to ITEMS: 401 for unauthorized user', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -142,19 +144,19 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe('Account GET requests', () => {
-    test('GET: 200 for successful retrieval', async () => {
+  describe('ACCOUNT ROUTER GET requests', () => {
+    test('ACCOUNT ROUTER GET: 200 for successful retrieval of item', async () => {
       try {
         const returnItem = await superagent.get(`${apiUrl}/items/${testAccount.item._id}`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
           .set('Authorization', `Bearer ${testAccount.token}`);
         expect(returnItem.status).toEqual(200);
       } catch (err) { 
-        console.log(err);  /* eslint-disable-line */
+        throw err; 
       }
     });
 
-    test('GET: 404 for item NOT FOUND', async () => {
+    test('ACCOUNT ROUTER GET: 404 for item NOT FOUND', async () => {
       try {
         const returnItem = await superagent.get(`${apiUrl}/items/badId`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -167,8 +169,8 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe('Account DELETE requests', () => {
-    test('DELETE 200 for successful deletion', async () => {
+  describe('ACCOUNT ROUTER DELETE requests', () => {
+    test('ACCOUNT ROUTER DELETE: Send 200 for successful deletion of item', async () => {
       try {
         const returnItem = await superagent.delete(`${apiUrl}/items/${testAccount.item._id}`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -179,7 +181,7 @@ describe('ITEM ROUTER', () => {
       }
     });
 
-    test('GET: 404 for item NOT FOUND', async () => {
+    test('ACCOUNT ROUTER DELETE: 404 for item NOT FOUND', async () => {
       try {
         const returnItem = await superagent.delete(`${apiUrl}/items/badId`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
@@ -192,14 +194,13 @@ describe('ITEM ROUTER', () => {
     });
   });
 
-  describe('Account PUT requests', () => {
-    test('PUT 200 for successful retrieval', async () => {
+  describe('ITEMS ROUTER PUT requests', () => {
+    test('ITEMS ROUTER PUT: 200 for successful updating of item and return new item', async () => {
       try {
         const newItem = {
           color: 'black',
           itemType: 'clothing',
         };
-        console.log(testAccount.item);
         const returnItem = await superagent.put(`${apiUrl}/items/${testAccount.item._id}`)
           .auth(testAccount.account.username, testAccount.originalRequest.password)
           .set('Authorization', `Bearer ${testAccount.token}`)
@@ -207,11 +208,11 @@ describe('ITEM ROUTER', () => {
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.color).toEqual('black');
       } catch (err) { 
-        console.log(err);
+        console.log(err); /* eslint-disable-line */
       }
     });
 
-    test('GET: 404 for item NOT FOUND', async () => {
+    test('ITEMS ROUTER PUT: 404 for item NOT FOUND', async () => {
       try {
         const newItem = {
           color: 'black',

@@ -20,11 +20,11 @@ const itemsSchema = mongoose.Schema({
   material: {
     type: String,
   },
-  image: {
-    url: String,
-    fileName: {
-      type: String,
-    },
+  imageUrl: {
+    type: String,
+  },
+  imageFileName: {
+    type: String,
   },
   accountId: {
     type: mongoose.Schema.Types.ObjectId,
