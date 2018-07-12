@@ -42,6 +42,7 @@ describe('ITEM ROUTER REQUESTS', () => {
         expect(returnItem.body._id).toBeTruthy();
         expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {
+        console.log(err, 'fgjkadglkjfglk;fhl;gkafglkadglk');
         expect(err).toEqual('something bad');
       }
     });

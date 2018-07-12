@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev-start": "nodemon index.js",
-    "test": "eslint . --fix && jest --coverage --detectOpenHandles --forceExit --runInBand",
+    "test": "eslint . --fix && jest --coverage --detectOpenHandles --runInBand",
     "testWatch": "jest --coverage --watchAll",
     "test-nolint": "jest --coverage --detectOpenHandles --forceExit --runInBand",
     "test-logs": "jest --coverage --detectOpenHandles --runInBand",
