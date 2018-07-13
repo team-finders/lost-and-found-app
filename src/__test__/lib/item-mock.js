@@ -14,7 +14,7 @@ const createItemMock = () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
-        location: 'Code Fellows',
+        locationId: mockData.account.locationId,
         accountId: mockData.account._id,
       };
       return new Item(mockItem).save();
@@ -34,9 +34,5 @@ const removeAllResources = () => {
     removeAccountMock(),
   ]);
 };
-
-
-// describe a post, .attach an img with path, send the body, 
-//  expect 200
 
 export { createItemMock, removeAllResources };

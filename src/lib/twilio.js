@@ -31,7 +31,7 @@ function itemPreHook(done) {
             .then((account) => {
               return sendMessage(account.phoneNumber, this.imageUrl);
             })
-            .catch(console.error);
+            .catch(console.error); //eslint-disable-line
         }
       }
       return undefined;

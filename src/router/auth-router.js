@@ -10,15 +10,12 @@ const authRouter = new Router();
 authRouter.post('/api/signup', (request, response, next) => {
   Account.init()
     .then(() => {
-      console.log('hit post route', Admin.find({}));
       return Admin.find({});
     })
     .then((admin) => {
-      console.log(admin, 'hitting admin');
       return admin[0]._id;
     })
     .then((locationId) => {
-      console.log(locationId, 'hitting location id');
       return Account.create(request.body.username, request.body.password, request.body.email, request.body.firstName, request.body.lastName, locationId, request.body.phoneNumber);
     })
     .then((account) => {

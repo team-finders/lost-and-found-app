@@ -38,7 +38,6 @@ describe('TWILIO ITEM TEST', () => {
       const mockItem = {
         postType: 'Found',
         itemType: 'water bottle',
-        location: 'Code Fellows',
       };
       try {
         const returnItem = await superagent.post(`${apiUrl}/items`)
@@ -49,7 +48,6 @@ describe('TWILIO ITEM TEST', () => {
         expect(returnItem.status).toEqual(200);
         expect(returnItem.body.postType).toEqual('Found');
         expect(returnItem.body.itemType).toEqual('water bottle');
-        expect(returnItem.body.location).toEqual('Code Fellows');
         expect(returnItem.body._id).toBeTruthy();
         expect(returnItem.body.imageUrl).toBeTruthy();
       } catch (err) {

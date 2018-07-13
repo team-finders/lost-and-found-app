@@ -12,10 +12,9 @@ describe('AUTH router', () => {
   beforeAll(async () => {
     startServer();
     try {
-      const admin = await createAdminMock();
-      console.log(admin);
+      const admin = await createAdminMock(); //eslint-disable-line
     } catch (err) {
-      console.log(err);
+      console.log(err); //eslint-disable-line
     }
   });
   afterAll(stopServer);
@@ -33,8 +32,9 @@ describe('AUTH router', () => {
   });
 
   describe('ACCOUNT POST REQUESTS', () => {
-    test.only('ACCOUNT ROUTER POST: 200 to /api/signup', async () => {
+    test('ACCOUNT ROUTER POST: 200 to /api/signup', async () => {
       const mockAccount = {
+        username: faker.internet.userName(),
         password: faker.lorem.words(5),
         email: faker.internet.email(),
         firstName: faker.name.firstName(),

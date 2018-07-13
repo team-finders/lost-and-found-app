@@ -13,7 +13,6 @@ const createAdminMock = () => {
 
   return Admin.create(originalRequest.username, originalRequest.password, originalRequest.email, originalRequest.location, originalRequest.phoneNumber)
     .then((account) => {
-      console.log(account);
       mockData.originalRequest = originalRequest;
       mockData.account = account;
       return account.createToken();

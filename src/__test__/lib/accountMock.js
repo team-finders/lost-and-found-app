@@ -13,10 +13,7 @@ const createAccountMock = () => {
     phoneNumber: faker.random.number(),
   };
 
-  Account.init()
-    .then(() => {
-      return Admin.find({});
-    })
+  return Admin.find({})
     .then((admin) => {
       return admin[0]._id;
     })
