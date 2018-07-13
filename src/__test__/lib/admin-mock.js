@@ -7,12 +7,11 @@ const createAdminMock = () => {
     username: faker.internet.userName(),
     password: faker.lorem.words(5),
     email: faker.internet.email(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
+    location: 'Code Fellows',
     phoneNumber: faker.random.number(),
   };
 
-  return Admin.create(originalRequest.username, originalRequest.password, originalRequest.email, originalRequest.firstName, originalRequest.lastName)
+  return Admin.create(originalRequest.username, originalRequest.password, originalRequest.email, originalRequest.location, originalRequest.phoneNumber)
     .then((account) => {
       mockData.originalRequest = originalRequest;
       mockData.account = account;

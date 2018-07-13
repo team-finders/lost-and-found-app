@@ -9,11 +9,11 @@ const adminRouter = new Router();
 adminRouter.post('/api/admin/create', (request, response, next) => {
   Admin.init()
     .then(() => {
-      return Admin.create(request.body.username, request.body.email, request.body.password, request.body.firstName, request.body.lastName, request.body.phoneNumber);
+      return Admin.create(request.body.username, request.body.password, request.body.email, request.body.location, request.body.phoneNumber);
     })
     .then((admin) => {
       delete request.body.password;
-      logger.log(logger.INFO, 'AUTH ROUTER to /api/signup: creating token');
+      logger.log(logger.INFO, 'ADMIN ROUTER to /api/admin/create creating token');
       return admin.createToken();
     })
     .then((token) => {

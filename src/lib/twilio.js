@@ -3,13 +3,14 @@ import Account from '../model/account';
 
 require('dotenv').config();
 
-// const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-function sendMessage(phoneNum) {
+function sendMessage(phoneNum, imageUrl) {
   return client.messages //eslint-disable-line
     .create({
       body: 'Is this your lost item??',
-      from: '+12062037088',
+      from: process.env.TWILIO_NUM,
+      mediaUrl: `${imageUrl}`,
       to: `+${phoneNum}`,
     })
     .then((message) => {
@@ -28,9 +29,9 @@ function itemPreHook(done) {
         if (item[i].postType !== this.postType && item[i].itemType === this.itemType) {
           return Account.findOne({ _id: item[i].accountId })
             .then((account) => {
-              return sendMessage(account.phoneNumber);
+              return sendMessage(account.phoneNumber, this.imageUrl);
             })
-            .catch(console.error);
+            .catch(console.error); //eslint-disable-line
         }
       }
       return undefined;

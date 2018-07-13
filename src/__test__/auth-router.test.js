@@ -4,11 +4,19 @@ import superagent from 'superagent';
 import faker from 'faker';
 import { startServer, stopServer } from '../lib/server';
 import { createAccountMock, removeAccountMock } from './lib/accountMock';
+import { createAdminMock } from './lib/admin-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
 describe('AUTH router', () => {
-  beforeAll(startServer);
+  beforeAll(async () => {
+    startServer();
+    try {
+      const admin = await createAdminMock(); //eslint-disable-line
+    } catch (err) {
+      console.log(err); //eslint-disable-line
+    }
+  });
   afterAll(stopServer);
   afterEach(removeAccountMock);
 
