@@ -9,7 +9,8 @@ const adminRouter = new Router();
 adminRouter.post('/api/admin/create', (request, response, next) => {
   Admin.init()
     .then(() => {
-      return Admin.create(request.body.username, request.body.email, request.body.password, request.body.firstName, request.body.lastName, request.body.phoneNumber);
+      console.log(request.body);
+      return Admin.create(request.body.username, request.body.password, request.body.email, request.body.location, request.body.phoneNumber);
     })
     .then((admin) => {
       delete request.body.password;

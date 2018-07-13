@@ -4,11 +4,20 @@ import superagent from 'superagent';
 import faker from 'faker';
 import { startServer, stopServer } from '../lib/server';
 import { createAccountMock, removeAccountMock } from './lib/accountMock';
+import { createAdminMock } from './lib/admin-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
 describe('AUTH router', () => {
-  beforeAll(startServer);
+  beforeAll(async () => {
+    startServer();
+    try {
+      const admin = await createAdminMock();
+      console.log(admin);
+    } catch (err) {
+      console.log(err);
+    }
+  });
   afterAll(stopServer);
   afterEach(removeAccountMock);
 
@@ -24,9 +33,8 @@ describe('AUTH router', () => {
   });
 
   describe('ACCOUNT POST REQUESTS', () => {
-    test('ACCOUNT ROUTER POST: 200 to /api/signup', async () => {
+    test.only('ACCOUNT ROUTER POST: 200 to /api/signup', async () => {
       const mockAccount = {
-        username: faker.internet.userName(),
         password: faker.lorem.words(5),
         email: faker.internet.email(),
         firstName: faker.name.firstName(),

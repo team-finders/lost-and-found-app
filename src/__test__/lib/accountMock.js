@@ -1,5 +1,6 @@
 import faker from 'faker';
 import Account from '../../model/account';
+import Admin from '../../model/admin';
 
 const createAccountMock = () => {
   const mockData = {};
@@ -12,7 +13,16 @@ const createAccountMock = () => {
     phoneNumber: faker.random.number(),
   };
 
-  return Account.create(originalRequest.username, originalRequest.password, originalRequest.email, originalRequest.firstName, originalRequest.lastName)
+  Account.init()
+    .then(() => {
+      return Admin.find({});
+    })
+    .then((admin) => {
+      return admin[0]._id;
+    })
+    .then((locationId) => {
+      return Account.create(originalRequest.username, originalRequest.password, originalRequest.email, originalRequest.firstName, originalRequest.lastName, locationId, originalRequest.phoneNumber);
+    })
     .then((account) => {
       mockData.originalRequest = originalRequest;
       mockData.account = account;

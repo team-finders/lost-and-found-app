@@ -14,8 +14,8 @@ const itemsSchema = mongoose.Schema({
     enum: ['water bottle', 'lunch box', 'clothing', 'jewelry', 'wallet/purse', 'keys', 'computer', 'cell phone', 'glasses/sunglasses', 'other'],
     required: true,
   },
-  location: {
-    type: String,
+  locationId: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   color: {

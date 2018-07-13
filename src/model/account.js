@@ -29,6 +29,9 @@ const accountSchema = mongoose.Schema({
     required: true,
     unique: true,
   },
+  locationId: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
   firstName: {
     type: String,
     required: true,
@@ -71,8 +74,8 @@ const skipInit = process.env.NODE_ENV === 'development';
 const Account = mongoose.model('accounts', accountSchema, 'accounts', skipInit);
 
 // Create a new account
-Account.create = (username, password, email, firstName, lastName, phoneNumber) => {
-  if (!username || !password || !email || !firstName || !lastName) throw new HttpErrors(400, 'missing form info');
+Account.create = (username, password, email, firstName, lastName, locationId, phoneNumber) => {
+  if (!username || !password || !firstName || !lastName || !email) throw new HttpErrors(400, 'missing form info');
   return bcrypt.hash(password, HASH_ROUNDS)
     .then((passwordHash) => {
       password = null; /*eslint-disable-line*/
@@ -83,6 +86,7 @@ Account.create = (username, password, email, firstName, lastName, phoneNumber) =
         email,
         firstName,
         lastName,
+        locationId,
         phoneNumber,
         tokenSeed,
       }).save();
