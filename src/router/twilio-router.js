@@ -27,7 +27,6 @@ twilioRouter.post('/api/sms', (req, res) => {
       return Items.findOne({ accountId: account._id });
     })
     .then((item) => {
-      console.log(item.itemType);
       if (item.itemType === 'wallet/purse' || item.itemType === 'keys' || item.itemType === 'computer') {
         return getAdminNum()
           .then((num) => {
