@@ -3,13 +3,20 @@ import HttpErrors from 'http-errors';
 import Account from '../model/account';
 import basicAuthMiddleware from '../lib/middleware/basic-auth-middleware';
 import logger from '../lib/logger';
+import Admin from '../model/admin';
 
 const authRouter = new Router();
 
 authRouter.post('/api/signup', (request, response, next) => {
   Account.init()
     .then(() => {
-      return Account.create(request.body.username, request.body.email, request.body.password, request.body.firstName, request.body.lastName, request.body.phoneNumber);
+      return Admin.find({});
+    })
+    .then((admin) => {
+      return admin[0]._id;
+    })
+    .then((locationId) => {
+      return Account.create(request.body.username, request.body.password, request.body.email, request.body.firstName, request.body.lastName, locationId, request.body.phoneNumber);
     })
     .then((account) => {
       delete request.body.password;
