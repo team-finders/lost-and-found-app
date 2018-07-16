@@ -3,7 +3,7 @@
 import superagent from 'superagent';
 import faker from 'faker'; /*eslint-disable-line*/
 import { startServer, stopServer } from '../lib/server';
-import { createMatchMock, removeAllResources } from './lib/match-mock';
+import { createMatchMock, removeAllResources } from './lib/match-mock'; 
 import { createAccountMock } from './lib/accountMock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
@@ -14,6 +14,7 @@ describe('TWILIO ITEM TEST', () => {
   afterEach(removeAllResources);
 
   let testAccount; //eslint-disable-line
+
   beforeEach(async () => {
     try {
       testAccount = await createMatchMock();
@@ -29,7 +30,7 @@ describe('TWILIO ITEM TEST', () => {
       try {
         testAccount2 = await createAccountMock();
       } catch (err) {
-        console.log(err);
+        console.log(err); /* eslint-disable-line */
       }
     });
 

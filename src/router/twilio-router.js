@@ -11,7 +11,7 @@ function getAdminNum() {
     .then((admin) => {
       return admin[0].phoneNumber;
     })
-    .catch(console.error);
+    .catch(console.error);  /* eslint-disable-line */
 }
 
 const MessagingResponse = require('twilio').twiml.MessagingResponse; //eslint-disable-line
@@ -24,7 +24,6 @@ twilioRouter.post('/api/sms', (req, res) => {
   const from = req.body.From.slice(1);
   return Account.findOne({ phoneNumber: from })
     .then((account) => {
-      console.log(account);
       return Items.findOne({ accountId: account._id });
     })
     .then((item) => {
@@ -42,7 +41,7 @@ twilioRouter.post('/api/sms', (req, res) => {
             res.writeHead(200, { 'Content-Type': 'text/xml' });
             res.end(twiml.toString());
           })
-          .catch(console.error);
+          .catch(console.error); /* eslint-disable-line */
       } 
 
       if (body === 'yes') {

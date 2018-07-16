@@ -29,8 +29,7 @@ describe('ADMIN ROUTER', () => {
         username: faker.internet.userName(),
         password: faker.lorem.words(5),
         email: faker.internet.email(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        location: 'Code Fellows',
         phoneNumber: faker.random.number(),
       };
       try {
@@ -47,8 +46,7 @@ describe('ADMIN ROUTER', () => {
       const mockAccount = {
         password: faker.lorem.words(5),
         email: faker.internet.email(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        location: 'Code Fellows',
         phoneNumber: faker.random.number(),
       };
       try {
@@ -64,8 +62,7 @@ describe('ADMIN ROUTER', () => {
       const mockAccount = {
         username: faker.internet.userName(),
         password: faker.lorem.words(5),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        location: 'Code Fellows',
         phoneNumber: faker.random.number(),
       };
       try {
@@ -82,8 +79,7 @@ describe('ADMIN ROUTER', () => {
         username: testAccount.account.username,
         password: faker.lorem.words(5),
         email: faker.internet.email(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        location: 'Code Fellows',
         phoneNumber: faker.random.number(),
       };
       try {
@@ -97,11 +93,10 @@ describe('ADMIN ROUTER', () => {
   
     test('ADMIN ROUTER POST: 409 for conflicting email', async () => {
       const mockAccount = {
-        username: testAccount.account.username,
+        username: faker.internet.userName(),
         password: faker.lorem.words(5),
         email: testAccount.account.email,
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        location: 'Code Fellows',
         phoneNumber: faker.random.number(),
       };
       try {
@@ -115,10 +110,9 @@ describe('ADMIN ROUTER', () => {
   
     test('ADMIN ROUTER POST: 500 for no password', async () => {
       const mockAccount = {
-        username: testAccount.account.username,
-        email: testAccount.account.email,
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        username: faker.internet.userName(),
+        email: faker.internet.email(),
+        location: 'Code Fellows',
         phoneNumber: faker.random.number(),
       };
       try {
