@@ -8,7 +8,7 @@ import { createAdminMock } from './lib/admin-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
-describe('AUTH router', () => {
+describe('ACCOUNT ROUTER', () => {
   beforeAll(async () => {
     startServer();
     try {

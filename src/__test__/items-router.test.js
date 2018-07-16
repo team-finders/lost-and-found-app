@@ -8,7 +8,7 @@ import { createAdminMock } from './lib/admin-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
-describe('ITEM ROUTER REQUESTS', () => {
+describe('ITEMS ROUTER REQUESTS', () => {
   beforeAll(async () => {
     startServer();
     try {
@@ -32,7 +32,7 @@ describe('ITEM ROUTER REQUESTS', () => {
   });
 
   describe('POST request to ITEMS', () => {
-    test('ITEM ROUTER POST: Send 200 for successful post to /api/items', async () => {
+    test('ITEMS ROUTER POST: Send 200 for successful post to /api/items', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -53,7 +53,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       }
     });
 
-    test('ITEM ROUTER POST: 400 for no postType', async () => {
+    test('ITEMS ROUTER POST: 400 for no postType', async () => {
       const mockItem = {
         itemType: 'water bottle',
       };
@@ -68,7 +68,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       }
     });
 
-    test('ITEM ROUTER POST: 401 for unauthorized user', async () => {
+    test('ITEMS ROUTER POST: 401 for unauthorized user', async () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
@@ -84,8 +84,8 @@ describe('ITEM ROUTER REQUESTS', () => {
     });
   });
 
-  describe('ACCOUNT ROUTER GET requests', () => {
-    test('ACCOUNT ROUTER GET: 200 for successful retrieval of item', async () => {
+  describe('ITEMS ROUTER GET requests', () => {
+    test('ITEMS ROUTER GET: 200 for successful retrieval of item', async () => {
       try {
         const returnItem = await superagent.get(`${apiUrl}/items/${testAccount.item._id}`)
           .set('Authorization', `Bearer ${testAccount.token}`);
@@ -95,7 +95,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       }
     });
 
-    test('ACCOUNT ROUTER GET: 404 for item NOT FOUND', async () => {
+    test('ITEMS ROUTER GET: 404 for item NOT FOUND', async () => {
       try {
         const returnItem = await superagent.get(`${apiUrl}/items/badId`)
           .set('Authorization', `Bearer ${testAccount.token}`);
@@ -106,8 +106,8 @@ describe('ITEM ROUTER REQUESTS', () => {
     });
   });
 
-  describe('ACCOUNT ROUTER DELETE requests', () => {
-    test('ACCOUNT ROUTER DELETE: Send 200 for successful deletion of item', async () => {
+  describe('ITEMS ROUTER DELETE requests', () => {
+    test('ITEMS ROUTER DELETE: Send 200 for successful deletion of item', async () => {
       try {
         const returnItem = await superagent.delete(`${apiUrl}/items/${testAccount.item._id}`)
           .set('Authorization', `Bearer ${testAccount.token}`);
@@ -117,7 +117,7 @@ describe('ITEM ROUTER REQUESTS', () => {
       }
     });
 
-    test('ACCOUNT ROUTER DELETE: 404 for item NOT FOUND', async () => {
+    test('ITEMS ROUTER DELETE: 404 for item NOT FOUND', async () => {
       try {
         const returnItem = await superagent.delete(`${apiUrl}/items/badId`)
           .set('Authorization', `Bearer ${testAccount.token}`);
