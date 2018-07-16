@@ -25,3 +25,21 @@ Lost-and-FoundIt is a back-end web-server that can be used by businesses or inst
 - User
 - Item
 - Assets (images of the items, unless security is needed)
+
+## Account Routes 
+### POST 
+/api/signup tp create a new Account, and enter the properties: 
+- Username
+- Email
+- Password
+- First Name
+- Last Name
+- Phone Number
+
+On success, we return our created account, we delete the password from the body of our Schema for security purposes. We then create a new promise for our token which will log success when a token is returned in JSON format to our database. If unsuccessful, our catch will move us to the next operation.
+
+###GET  
+/api/login, logs us into an existing an account. On success, we receive a 200 status code, and create a new token promise which returns a token response in JSON format. Authentication to Bearer Token: set Token field to token retrieved from Account creation, then confirm with Preview Request
+
+
+
