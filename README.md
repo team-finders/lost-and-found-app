@@ -68,39 +68,10 @@ On success, we return a created Admin account, we delete the password from the b
 `p95 and p99 values` - the 95th and 99th percentile values (a request latency p99 value of 500ms means that 99 out of 100 requests took 500ms or less to complete)
 `Codes` - will print out the reported codes, any error codes denote errors in the testing
 
-###Summary report @ 19:14:31(-0700) 2018-07-15
-  Scenarios launched:  3019
-  Scenarios completed: 1
-  Requests completed:  3020
-  RPS sent: 243.74
-  Request latency:
-    min: 3
-    max: 94.6
-    median: 5.8
-    p95: 23.5 
-    p99: 41.4
-  Scenario counts:
-    Create Accounts: 3020 (100%)
-  Codes:
-    200: 1
-    409: 3019
+## Load Test Charts and Graphs
+file:///Users/noahisrael/codefellows/401/labs/lost-and-found-app/src/__test__/load%20tests/test-results.json.html
 
-###Summary report @ 19:18:03(-0700) 2018-07-15
-  Scenarios launched:  3020
-  Scenarios completed: 3020
-  Requests completed:  6040
-  RPS sent: 449.07
-  Request latency:
-    min: 2
-    max: 1507
-    median: 576.6
-    p95: 1285.8
-    p99: 1395.6
-  Scenario counts:
-    Create Accounts: 3020 (100%)
-  Codes:
-    200: 3020
-    400: 3020
+
 
 
 
