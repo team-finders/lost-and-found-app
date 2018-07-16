@@ -1,6 +1,7 @@
 import faker from 'faker';
 import Item from '../../model/items';
 import Account from '../../model/account';
+import Admin from '../../model/admin';
 
 const createAccountMock = () => {
   const mockData = {};
@@ -13,7 +14,13 @@ const createAccountMock = () => {
     phoneNumber: '12065187920',
   };
 
-  return Account.create(originalRequest.username, originalRequest.password, originalRequest.email, originalRequest.firstName, originalRequest.lastName, originalRequest.phoneNumber)
+  return Admin.find({})
+    .then((admin) => {
+      return admin[0]._id;
+    })
+    .then((locationId) => {
+      return Account.create(originalRequest.username, originalRequest.password, originalRequest.email, originalRequest.firstName, originalRequest.lastName, locationId, originalRequest.phoneNumber);
+    })
     .then((account) => {
       mockData.originalRequest = originalRequest;
       mockData.account = account;
@@ -43,6 +50,7 @@ const createMatchMock = () => {
       const mockItem = {
         postType: 'Lost',
         itemType: 'water bottle',
+        locationId: mockData.account.locationId,
         accountId: mockData.account._id,
       };
       return new Item(mockItem).save();
