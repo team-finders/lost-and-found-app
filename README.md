@@ -153,6 +153,10 @@ to /api/items/:id? Uses the s3Remove function to reference an item by its ID to 
     200: 3020
     400: 3020
 
+## Load Test Charts and Graphs
+file:///Users/noahisrael/codefellows/401/labs/lost-and-found-app/src/__test__/load%20tests/test-results.json.html
+
+-----------------
 
 ## Built With:
 * [NodeJS] (https://nodejs.org/en/) - Event-driven, JavaScript runtime environment for building scalable applications
