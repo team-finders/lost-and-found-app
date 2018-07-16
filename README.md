@@ -103,6 +103,11 @@ to api/items/:id? Allows a user to go back and fill in any missing details about
 ##### DELETE (destroy)
 to /api/items/:id? Uses the s3Remove function to reference an item by its ID to remove the associated image from its particular bucket. We receive a 204 status code upon successful deletion of an item.
 
+## TWILIO
+
+##### POST
+/api/sms Creates our messages to the user for successful matching of an item to its user. Sends a 200 status code for successfully sending the SMS.
+
 ---------------
 
 ## Load Tests
