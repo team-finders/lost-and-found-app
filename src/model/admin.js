@@ -1,5 +1,6 @@
-'use strict';
+// JV: Admin model looks great
 
+'use strict';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';

@@ -75,6 +75,7 @@ itemsRouter.get('/api/items/:id?', bearerAuthMiddleware, permit('account', 'admi
     .catch(next);
   return undefined;
 });
+// JV: Be mindful of corpose code
 
 // return Item.findById(request.params.id)
 // .then((image) => {
