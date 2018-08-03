@@ -5,17 +5,15 @@ const uuid = require('uuid/v4');
 
 const loadTestUser = module.exports = {};
 
-loadTestUser.create = (accountContext, events, done) => {
-  // properties from account schema
-  accountContext.vars.username = faker.internet.userName() + uuid();
-  accountContext.vars.email = faker.internet.email() + uuid();
-  accountContext.vars.password = faker.internet.password() + uuid();
+loadTestUser.create = (userContext, events, done) => {
+  // properties from my account schema
+  userContext.vars.username = faker.internet.userName() + uuid();
+  userContext.vars.email = faker.internet.email() + uuid();
+  userContext.vars.password = faker.internet.password() + uuid();
 
-  // properties from item schema
-  accountContext.vars.bio = faker.lorem.words(10) + uuid();
-  accountContext.vars.postType = `lost ${uuid()}`;
-  accountContext.vars.itemType = `watch ${uuid()}`;
-  accountContext.vars.color = `purple ${uuid()}`;
+  // properties from my profile schema
+  userContext.vars.bio = faker.lorem.words(10) + uuid();
+  userContext.vars.firstName = faker.name.firstName() + uuid();
+  userContext.vars.lastName = faker.name.lastName() + uuid();
   return done();
 };
-

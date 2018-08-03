@@ -7,9 +7,10 @@ import logger from '../lib/logger';
 const authRouter = new Router();
 
 authRouter.post('/api/signup', (request, response, next) => {
+  console.log(request.body);
   Account.init()
     .then(() => {
-      return Account.create(request.body.username, request.body.email, request.body.password, request.body.firstName, request.body.lastName, request.body.phoneNumber);
+      return Account.create(request.body.username, request.body.email, request.body.password);
     })
     .then((account) => {
       delete request.body.password;

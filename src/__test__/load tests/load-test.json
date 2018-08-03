@@ -16,11 +16,11 @@
         "arrivalRate": 300
       }
     ],
-    "processor" : "./load-test-create-account.js"
+    "processor" : "./load-test-create-user.js"
   },
   "scenarios": [
     {
-      "name": "Create Accounts",
+      "name": "Create Users",
       "flow": [
         {
           "function": "create"
@@ -29,11 +29,9 @@
           "post": {
             "url": "/api/signup",
             "json": {
-              "username": "noahmvf",
-              "email": "noahmvf@gmail.com",
-              "password": "apsjfoasjfoi",
-              "firstName": "Noah",
-              "lastName": "Alexander"
+              "username": "{{ username }}",
+              "email": "{{ email }}",
+              "password": "{{ password }}"
             },
             "capture": {
               "json": "$.token",
@@ -43,14 +41,14 @@
         }
         ,{
           "post": {
-            "url": "/api/items",
+            "url": "/api/profiles",
             "headers": {
               "Authorization": "Bearer {{ token }}"
             },
             "json": {
-              "postType": "Lost",
-              "itemType": "Watch",
-              "color": "Gold"
+              "bio": "{{ bio }}",
+              "firstName": "{{ firstName }}",
+              "lastName": "{{ lastName }}"
             }
           }
         }
