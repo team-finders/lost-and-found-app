@@ -12,13 +12,30 @@ import authRouter from '../router/auth-router';
 import adminRouter from '../router/admin-router';
 import itemRouter from '../router/items-router';
 import twilioRouter from '../router/twilio-router';
+import profileRouter from '../router/profile-router';
+import googleOAuthRouter from '../router/google-router';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 let server = null;
 
-app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
+const corsOptions = {
+  origin: (origin, cb) => {
+    if (!origin) {
+      // assume Google API or Cypress
+      cb(null, true);
+    } else if (origin.includes(process.env.CORS_ORIGINS)) {
+      cb(null, true);
+    } else {
+      throw new Error(`${origin} not allowed by CORS`);
+    }
+  },
+  credentials: true,
+};
+
+
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -28,6 +45,8 @@ app.use(adminRouter);
 app.use(itemRouter);
 app.use(twilioRouter);
 app.use(errorMiddleware);
+app.use(profileRouter);
+app.use(googleOAuthRouter);
 
 // app.all('*', (request, response) => {
 //   console.log('Returning a 404 from the catch-all route', response.err);
