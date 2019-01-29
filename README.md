@@ -1,3 +1,4 @@
+<!-- Having your Travis badge here would have been a good feature -->
 # Lost-and-FoundIt Api
 
 ## CF401 Midterm Project
@@ -109,7 +110,7 @@ to /api/items/:id? Uses the s3Remove function to reference an item by its ID to 
 /api/sms Creates our messages to the user for successful matching of an item to its user. Sends a 200 status code for successfully sending the SMS.
 
 ---------------
-
+<!-- Your documentation for load tests are great -->
 ## Load Tests
 - `scenariosCreated` - number of virtual users created in the preceding 10 seconds
 - `scenariosCompleted` - number of virtual users that completed their scenarios in the preceding 10 seconds
@@ -154,10 +155,11 @@ to /api/items/:id? Uses the s3Remove function to reference an item by its ID to 
     400: 3020
 
 ## Load Test Charts and Graphs
+<!--  I think your intended formatting for these links didn't come out right -->
+
 file:///Users/noahisrael/codefellows/401/labs/lost-and-found-app/src/__test__/load%20tests/test-results.json.html
 
 -----------------
-
 ## Built With:
 * [NodeJS] (https://nodejs.org/en/) - Event-driven, JavaScript runtime environment for building scalable applications
 * [Express] (https://expressjs.com/) - NodeJS application framework for creating web and mobile applications
@@ -183,6 +185,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
+<!-- Aw, you're welcome, remember TAs' help as well. :) -->
 * Thanks to Code Fellows and Lead Instructor Judy Vue for inspiration and initial codebase.
 
 

@@ -1,5 +1,6 @@
 import Item from '../model/items';
 import Account from '../model/account';
+// JV: abstracting this out was an awesome idea!
 
 require('dotenv').config();
 
