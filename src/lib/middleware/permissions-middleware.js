@@ -1,5 +1,6 @@
 'use strict';
 
+// JV: Great job with this middle ware and using a spread operater and partial application on this. Awesome!
 export default function permit(...allowed) {
   const isAllowed = role => allowed.indexOf(role) > -1;
 

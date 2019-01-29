@@ -11,6 +11,7 @@ const itemsSchema = mongoose.Schema({
   },
   itemType: {
     type: String,
+    // JV: I think it was good to keep your scope smasll with hardcoded items in your enum property so that you could have an easier time with your project
     enum: ['water bottle', 'lunch box', 'clothing', 'jewelry', 'wallet/purse', 'keys', 'computer', 'cell phone', 'glasses/sunglasses', 'other'],
     required: true,
   },
